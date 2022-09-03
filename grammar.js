@@ -2,47 +2,55 @@ module.exports = grammar({
   name: 'asm',
 
   rules: {
-    source_file: $ => choice(
-        $.function_definition,
+    source_file: $ => repeat($.function_definition),
+
+    function_definition: $ => seq(
+        $.function_label,
+        repeat($._statement),
     ),
 
-
-    function_definition: $ => /[[a-z]+][:]/,
 
     _statement: $ => choice(
       $.return_statement,
-      // TODO: other kinds of statements
+      $.math_statement,
+      $.mov_statement,
+    ),
+
+    math_statement: $ => seq(
+        $.math_operation,
+        $.register,
+        ',',
+        $.register,
+        ',',
+        $.register,
+    ),
+
+    mov_statement: $ => seq(
+        'mov',
+        $.register,
+        ',',
+        choice(
+            $.register,
+            $.constant,
+        ),
     ),
 
 
-    add_statement: $ => seq(
+    math_operation: $ => choice(
+        'sub',
         'add',
-        $.register,
-        ',',
-        $.register,
-        ',',
-        $.register,
+        'muls',
     ),
 
-    return_statement: $ => seq(
-        $.return_register,
-        $.register,
-    ),
+    // TODO: look into making this better
+    function_label: $ => /[[a-z]+][:]/,
 
-    return_register: $ => /(bx)\s+/,
-
-    //_expression: $ => choice(
-    //  $.special_register,
-    //  $.register,
-    //  $.number,
-    //  // TODO: other kinds of expressions
-    //),
-
-    special_register: $ => 'lr',
+    return_statement: $ => /(bx)\s+[a-z]+/,
 
     register: $ => /[r]\d+/,
 
-    number: $ => /\d+/,
+    constant: $ => /\d+/,
+
   }
 });
 

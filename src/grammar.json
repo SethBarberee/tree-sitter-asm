@@ -2,17 +2,27 @@
   "name": "asm",
   "rules": {
     "source_file": {
-      "type": "CHOICE",
+      "type": "REPEAT",
+      "content": {
+        "type": "SYMBOL",
+        "name": "function_definition"
+      }
+    },
+    "function_definition": {
+      "type": "SEQ",
       "members": [
         {
           "type": "SYMBOL",
-          "name": "function_definition"
+          "name": "function_label"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_statement"
+          }
         }
       ]
-    },
-    "function_definition": {
-      "type": "PATTERN",
-      "value": "[[a-z]+][:]"
     },
     "_statement": {
       "type": "CHOICE",
@@ -20,64 +30,106 @@
         {
           "type": "SYMBOL",
           "name": "return_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "math_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "mov_statement"
         }
       ]
     },
-    "add_statement": {
+    "math_statement": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "SYMBOL",
+          "name": "math_operation"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "register"
+        },
+        {
+          "type": "STRING",
+          "value": ","
+        },
+        {
+          "type": "SYMBOL",
+          "name": "register"
+        },
+        {
+          "type": "STRING",
+          "value": ","
+        },
+        {
+          "type": "SYMBOL",
+          "name": "register"
+        }
+      ]
+    },
+    "mov_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "mov"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "register"
+        },
+        {
+          "type": "STRING",
+          "value": ","
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "register"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "constant"
+            }
+          ]
+        }
+      ]
+    },
+    "math_operation": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "sub"
+        },
         {
           "type": "STRING",
           "value": "add"
         },
         {
-          "type": "SYMBOL",
-          "name": "register"
-        },
-        {
           "type": "STRING",
-          "value": ","
-        },
-        {
-          "type": "SYMBOL",
-          "name": "register"
-        },
-        {
-          "type": "STRING",
-          "value": ","
-        },
-        {
-          "type": "SYMBOL",
-          "name": "register"
+          "value": "muls"
         }
       ]
+    },
+    "function_label": {
+      "type": "PATTERN",
+      "value": "[[a-z]+][:]"
     },
     "return_statement": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "return_register"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "register"
-        }
-      ]
-    },
-    "return_register": {
       "type": "PATTERN",
-      "value": "(bx)\\s+"
-    },
-    "special_register": {
-      "type": "STRING",
-      "value": "lr"
+      "value": "(bx)\\s+[a-z]+"
     },
     "register": {
       "type": "PATTERN",
       "value": "[r]\\d+"
     },
-    "number": {
+    "constant": {
       "type": "PATTERN",
       "value": "\\d+"
     }
