@@ -8,3 +8,14 @@ basic directive
 
 (source_file
   (directive))
+
+=================================================
+basic directive w/ extra stuff after
+=================================================
+
+.macro warp_def x, y, byte, warp, map_id
+
+------------------------------------------------
+
+(source_file
+  (directive))

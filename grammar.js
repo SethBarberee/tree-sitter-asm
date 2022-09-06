@@ -67,7 +67,7 @@ module.exports = grammar({
             /pc/,
     ),
 
-    directive: $ => /[.][a-z]+/,
+    directive: $ => /[.][a-z]+.*/,
 
     comment: $ => /@.*/,
 

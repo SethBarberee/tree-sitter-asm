@@ -196,7 +196,7 @@
     },
     "directive": {
       "type": "PATTERN",
-      "value": "[.][a-z]+"
+      "value": "[.][a-z]+.*"
     },
     "comment": {
       "type": "PATTERN",
