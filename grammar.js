@@ -43,7 +43,7 @@ module.exports = grammar({
     ),
 
     // TODO: look into making this better
-    function_label: $ => /[[a-z]+][:]/,
+    function_label: $ => /[a-z]+[:]/,
 
     return_statement: $ => /(bx)\s+[a-z]+/,
 

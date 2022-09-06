@@ -119,7 +119,7 @@
     },
     "function_label": {
       "type": "PATTERN",
-      "value": "[[a-z]+][:]"
+      "value": "[a-z]+[:]"
     },
     "return_statement": {
       "type": "PATTERN",
