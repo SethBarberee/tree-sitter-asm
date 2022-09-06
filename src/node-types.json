@@ -106,6 +106,10 @@
       "required": false,
       "types": [
         {
+          "type": "comment",
+          "named": true
+        },
+        {
           "type": "directive",
           "named": true
         },
@@ -122,6 +126,10 @@
   },
   {
     "type": "branch_statement",
+    "named": true
+  },
+  {
+    "type": "comment",
     "named": true
   },
   {

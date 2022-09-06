@@ -5,6 +5,7 @@ module.exports = grammar({
     source_file: $ => choice(
         repeat($.function_definition),
         repeat($.directive),
+        repeat($.comment),
     ),
 
     function_definition: $ => seq(
@@ -67,6 +68,8 @@ module.exports = grammar({
     ),
 
     directive: $ => /[.][a-z]+/,
+
+    comment: $ => /@.*/,
 
     constant: $ => /\d+/,
 

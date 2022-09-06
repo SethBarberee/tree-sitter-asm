@@ -17,6 +17,13 @@
             "type": "SYMBOL",
             "name": "directive"
           }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "comment"
+          }
         }
       ]
     },
@@ -190,6 +197,10 @@
     "directive": {
       "type": "PATTERN",
       "value": "[.][a-z]+"
+    },
+    "comment": {
+      "type": "PATTERN",
+      "value": "@.*"
     },
     "constant": {
       "type": "PATTERN",
