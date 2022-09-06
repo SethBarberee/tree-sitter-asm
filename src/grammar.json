@@ -2,11 +2,23 @@
   "name": "asm",
   "rules": {
     "source_file": {
-      "type": "REPEAT",
-      "content": {
-        "type": "SYMBOL",
-        "name": "function_definition"
-      }
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "function_definition"
+          }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "directive"
+          }
+        }
+      ]
     },
     "function_definition": {
       "type": "SEQ",
@@ -128,6 +140,10 @@
     "register": {
       "type": "PATTERN",
       "value": "[r]\\d+"
+    },
+    "directive": {
+      "type": "PATTERN",
+      "value": "[.][a-z]+"
     },
     "constant": {
       "type": "PATTERN",

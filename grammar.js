@@ -2,7 +2,10 @@ module.exports = grammar({
   name: 'asm',
 
   rules: {
-    source_file: $ => repeat($.function_definition),
+    source_file: $ => choice(
+        repeat($.function_definition),
+        repeat($.directive),
+    ),
 
     function_definition: $ => seq(
         $.function_label,
@@ -48,6 +51,8 @@ module.exports = grammar({
     return_statement: $ => /(bx)\s+[a-z]+/,
 
     register: $ => /[r]\d+/,
+
+    directive: $ => /[.][a-z]+/,
 
     constant: $ => /\d+/,
 

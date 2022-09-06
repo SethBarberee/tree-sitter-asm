@@ -78,6 +78,10 @@
       "required": false,
       "types": [
         {
+          "type": "directive",
+          "named": true
+        },
+        {
           "type": "function_definition",
           "named": true
         }
@@ -94,6 +98,10 @@
   },
   {
     "type": "constant",
+    "named": true
+  },
+  {
+    "type": "directive",
     "named": true
   },
   {
