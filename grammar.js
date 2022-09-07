@@ -15,12 +15,13 @@ module.exports = grammar({
 
     _statement: $ => choice(
       $.return_statement,
+      $.branch_statement,
       $.math_statement,
       $.mov_statement,
     ),
 
     math_statement: $ => seq(
-        $.math_operation,
+        $.opcode,
         $.register,
         ',',
         $.register,
@@ -29,7 +30,7 @@ module.exports = grammar({
     ),
 
     mov_statement: $ => seq(
-        'mov',
+        $.opcode,
         $.register,
         ',',
         choice(
@@ -38,19 +39,32 @@ module.exports = grammar({
         ),
     ),
 
-
-    math_operation: $ => choice(
-        'sub',
-        'add',
-        'muls',
+    // TODO: fairly limited and only to ARM/THUMB for now since that's all I use
+    opcode: $ => choice(
+        /sub+/,
+        /add+/,
+        /mul+/,
+        /mov+/,
+        /stm+/,
+        /str+/,
     ),
 
     // TODO: look into making this better
-    function_label: $ => /[a-z]+[:]/,
+    function_label: $ => /[A-z]+[:]/,
 
-    return_statement: $ => /(bx)\s+[a-z]+/,
+    return_statement: $ => seq(
+            /(bx)\s+/,
+            $.register,
+    ),
 
-    register: $ => /[r]\d+/,
+    branch_statement: $ => /(bl)\s+[A-z]+/,
+
+    register: $ => choice(
+            /[r]\d+/,
+            /sp/,
+            /lr/,
+            /pc/,
+    ),
 
     directive: $ => /[.][a-z]+/,
 

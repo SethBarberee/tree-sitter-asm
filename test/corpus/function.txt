@@ -24,11 +24,12 @@ test:
   (function_definition
     (function_label)
     (math_statement
-      (math_operation)
+      (opcode)
       (register)
       (register)
       (register))
-    (return_statement)))
+    (return_statement
+      (register))))
 
 =================================================
 basic mov w/ constant function
@@ -44,7 +45,27 @@ test:
   (function_definition
     (function_label)
     (mov_statement
+      (opcode)
       (register)
       (constant))
-    (return_statement)))
+    (return_statement
+      (register))))
+
+=================================================
+basic function w/ branch
+=================================================
+
+test:
+    bl MemoryAlloc
+    bx lr
+
+------------------------------------------------
+
+(source_file
+  (function_definition
+    (function_label)
+    (branch_statement)
+    (return_statement
+      (register))))
+
 

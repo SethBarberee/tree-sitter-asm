@@ -45,6 +45,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "branch_statement"
+        },
+        {
+          "type": "SYMBOL",
           "name": "math_statement"
         },
         {
@@ -58,7 +62,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "math_operation"
+          "name": "opcode"
         },
         {
           "type": "SYMBOL",
@@ -86,8 +90,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "mov"
+          "type": "SYMBOL",
+          "name": "opcode"
         },
         {
           "type": "SYMBOL",
@@ -112,34 +116,76 @@
         }
       ]
     },
-    "math_operation": {
+    "opcode": {
       "type": "CHOICE",
       "members": [
         {
-          "type": "STRING",
-          "value": "sub"
+          "type": "PATTERN",
+          "value": "sub+"
         },
         {
-          "type": "STRING",
-          "value": "add"
+          "type": "PATTERN",
+          "value": "add+"
         },
         {
-          "type": "STRING",
-          "value": "muls"
+          "type": "PATTERN",
+          "value": "mul+"
+        },
+        {
+          "type": "PATTERN",
+          "value": "mov+"
+        },
+        {
+          "type": "PATTERN",
+          "value": "stm+"
+        },
+        {
+          "type": "PATTERN",
+          "value": "str+"
         }
       ]
     },
     "function_label": {
       "type": "PATTERN",
-      "value": "[a-z]+[:]"
+      "value": "[A-z]+[:]"
     },
     "return_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "(bx)\\s+"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "register"
+        }
+      ]
+    },
+    "branch_statement": {
       "type": "PATTERN",
-      "value": "(bx)\\s+[a-z]+"
+      "value": "(bl)\\s+[A-z]+"
     },
     "register": {
-      "type": "PATTERN",
-      "value": "[r]\\d+"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[r]\\d+"
+        },
+        {
+          "type": "PATTERN",
+          "value": "sp"
+        },
+        {
+          "type": "PATTERN",
+          "value": "lr"
+        },
+        {
+          "type": "PATTERN",
+          "value": "pc"
+        }
+      ]
     },
     "directive": {
       "type": "PATTERN",
