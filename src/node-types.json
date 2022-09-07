@@ -20,11 +20,11 @@
           "named": true
         },
         {
-          "type": "mov_statement",
+          "type": "return_statement",
           "named": true
         },
         {
-          "type": "return_statement",
+          "type": "simple_statement",
           "named": true
         }
       ]
@@ -38,29 +38,6 @@
       "multiple": true,
       "required": true,
       "types": [
-        {
-          "type": "opcode",
-          "named": true
-        },
-        {
-          "type": "register",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "mov_statement",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "constant",
-          "named": true
-        },
         {
           "type": "opcode",
           "named": true
@@ -90,6 +67,29 @@
       "multiple": false,
       "required": true,
       "types": [
+        {
+          "type": "register",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "simple_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "opcode",
+          "named": true
+        },
         {
           "type": "register",
           "named": true

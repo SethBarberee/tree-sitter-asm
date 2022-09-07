@@ -32,30 +32,12 @@ test:
       (register))))
 
 =================================================
-basic mov w/ constant function
+basic function w/ push and branch
 =================================================
 
 test:
+    push lr
     mov r0, 0
-    bx lr
-
-------------------------------------------------
-
-(source_file
-  (function_definition
-    (function_label)
-    (mov_statement
-      (opcode)
-      (register)
-      (constant))
-    (return_statement
-      (register))))
-
-=================================================
-basic function w/ branch
-=================================================
-
-test:
     bl MemoryAlloc
     bx lr
 
@@ -64,8 +46,14 @@ test:
 (source_file
   (function_definition
     (function_label)
+    (simple_statement
+      (opcode)
+      (register))
+    (simple_statement
+      (opcode)
+      (register)
+      (constant))
     (branch_statement)
     (return_statement
       (register))))
-
 

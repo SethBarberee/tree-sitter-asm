@@ -1,0 +1,16 @@
+=================================================
+basic compare 
+=================================================
+
+test:
+    cmp r0, 20
+
+------------------------------------------------
+
+(source_file
+  (function_definition
+    (function_label)
+        (simple_statement
+            (opcode)
+            (register)
+            (constant))))
