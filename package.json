@@ -18,5 +18,12 @@
     "test": "tree-sitter test",
     "lint": "prettier --check grammar.js",
     "build": "tree-sitter generate"
+  },
+  "tree-sitter": [
+   {
+    "file-types": [
+      "asm"
+    ]
   }
+ ]
 }
