@@ -4,14 +4,16 @@ basic compare
 
 test:
     cmp r0, 20
+    bx lr
 
 ------------------------------------------------
 
 (source_file
   (function_definition
-    (function_label)
-    (function_statement
+    (label)
         (simple_statement
             (opcode)
             (register)
-            (constant)))))
+            (constant))
+        (return_statement
+            (register))))

@@ -1,16 +1,4 @@
 =================================================
-basic function label 
-=================================================
-
-test:
-
-------------------------------------------------
-
-(source_file
-  (function_definition
-    (function_label)))
-
-=================================================
 basic addition function
 =================================================
 
@@ -22,15 +10,14 @@ test:
 
 (source_file
   (function_definition
-    (function_label)
-    (function_statement
+    (label)
         (math_statement
           (opcode)
           (register)
           (register)
-          (register))))
+          (register))
         (return_statement
-          (register)))
+          (register))))
 
 =================================================
 basic function w/ push and branch
@@ -47,34 +34,19 @@ test:
 
 (source_file
   (function_definition
-    (function_label)
-    (function_statement
+    (label)
         (simple_statement
           (opcode)
-          (register)))
-    (function_statement
-        (simple_statement
-          (opcode)
-          (register)
-          (constant)))
-    (function_statement
+          (register))
         (simple_statement
           (opcode)
           (register)
-          (constant))))
-        (branch_statement)
+          (constant))
+        (simple_statement
+          (opcode)
+          (register)
+          (constant))
+        (branch_statement
+            (identifier))
         (return_statement
-          (register)))
-
-=================================================
-basic return
-=================================================
-
-bx lr
-
-------------------------------------------------
-
-(source_file
-  (return_statement
-    (register)))
-
+          (register))))
