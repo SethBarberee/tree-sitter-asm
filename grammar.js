@@ -2,22 +2,23 @@ module.exports = grammar({
   name: "asm",
 
   rules: {
-    source_file: ($) =>
-      choice(
-        repeat($.function_definition),
-        repeat($.directive),
-        repeat($.comment)
-      ),
-
-    function_definition: ($) => seq($.function_label, repeat($._statement)),
+    source_file: ($) => optional($._statement),
 
     _statement: ($) =>
-      choice(
-        $.return_statement,
-        $.branch_statement,
-        $.math_statement,
-        $.simple_statement
+      repeat1(
+        choice(
+          $.function_definition,
+          $.directive,
+          $.comment,
+          $.return_statement,
+          $.branch_statement
+        )
       ),
+
+    function_definition: ($) =>
+      seq($.function_label, repeat($.function_statement)),
+
+    function_statement: ($) => choice($.math_statement, $.simple_statement),
 
     math_statement: ($) =>
       seq($.opcode, $.register, ",", $.register, ",", $.register),
@@ -63,7 +64,6 @@ module.exports = grammar({
 
     comment: ($) => /@.*/,
 
-    // TODO: make this also acccept hex numbers too
-    constant: ($) => /\d+/,
+    constant: ($) => choice(/\d+/, /0[xX][0-9a-fA-F]+/),
   },
 });

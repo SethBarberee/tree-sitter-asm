@@ -5,27 +5,41 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "function_definition"
-          }
+          "type": "SYMBOL",
+          "name": "_statement"
         },
         {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "directive"
-          }
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "comment"
-          }
+          "type": "BLANK"
         }
       ]
+    },
+    "_statement": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "function_definition"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "directive"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "comment"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "return_statement"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "branch_statement"
+          }
+        ]
+      }
     },
     "function_definition": {
       "type": "SEQ",
@@ -38,22 +52,14 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "_statement"
+            "name": "function_statement"
           }
         }
       ]
     },
-    "_statement": {
+    "function_statement": {
       "type": "CHOICE",
       "members": [
-        {
-          "type": "SYMBOL",
-          "name": "return_statement"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "branch_statement"
-        },
         {
           "type": "SYMBOL",
           "name": "math_statement"
@@ -251,8 +257,17 @@
       "value": "@.*"
     },
     "constant": {
-      "type": "PATTERN",
-      "value": "\\d+"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "\\d+"
+        },
+        {
+          "type": "PATTERN",
+          "value": "0[xX][0-9a-fA-F]+"
+        }
+      ]
     }
   },
   "extras": [
