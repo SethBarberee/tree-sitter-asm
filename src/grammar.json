@@ -212,10 +212,6 @@
         {
           "type": "PATTERN",
           "value": "push+"
-        },
-        {
-          "type": "PATTERN",
-          "value": "pop+"
         }
       ]
     },

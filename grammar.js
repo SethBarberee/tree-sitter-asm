@@ -56,7 +56,7 @@ module.exports = grammar({
         /lsl+/,
         /lsr+/,
         /ldr+/,
-        /push+/,
+        /push+/
         // /pop+/, // TODO pop causes bad things to happen
       ),
 
