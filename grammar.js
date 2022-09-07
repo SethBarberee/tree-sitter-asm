@@ -9,6 +9,7 @@ module.exports = grammar({
 
     function_definition: ($) =>
       seq(
+        alias($.label, $.func_name),
         repeat1(
           choice(
             $.math_statement,

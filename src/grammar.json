@@ -37,6 +37,15 @@
       "type": "SEQ",
       "members": [
         {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "label"
+          },
+          "named": true,
+          "value": "func_name"
+        },
+        {
           "type": "REPEAT1",
           "content": {
             "type": "CHOICE",

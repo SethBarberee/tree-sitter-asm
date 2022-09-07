@@ -41,6 +41,10 @@
           "named": true
         },
         {
+          "type": "func_name",
+          "named": true
+        },
+        {
           "type": "label",
           "named": true
         },
@@ -159,6 +163,10 @@
   },
   {
     "type": "directive",
+    "named": true
+  },
+  {
+    "type": "func_name",
     "named": true
   },
   {

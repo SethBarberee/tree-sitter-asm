@@ -10,7 +10,7 @@ test:
 
 (source_file
   (function_definition
-    (label)
+    (func_name)
         (simple_statement
             (opcode)
             (register)
