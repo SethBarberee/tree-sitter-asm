@@ -49,7 +49,15 @@
           "named": true
         },
         {
+          "type": "load_statement",
+          "named": true
+        },
+        {
           "type": "math_statement",
+          "named": true
+        },
+        {
+          "type": "push_statement",
           "named": true
         },
         {
@@ -58,6 +66,21 @@
         },
         {
           "type": "simple_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "load_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "register",
           "named": true
         }
       ]
@@ -88,6 +111,11 @@
   },
   {
     "type": "opcode",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "push_statement",
     "named": true,
     "fields": {}
   },

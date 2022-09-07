@@ -20,6 +20,25 @@ test:
           (register))))
 
 =================================================
+basic load function
+=================================================
+
+test:
+    ldr r0, [r0, 0x0] 
+    bx lr
+
+------------------------------------------------
+
+(source_file
+  (function_definition
+    (func_name)
+        (load_statement
+          (register))
+        (return_statement
+          (register))))
+
+
+=================================================
 basic function w/ push and branch
 =================================================
 
@@ -35,9 +54,7 @@ test:
 (source_file
   (function_definition
     (func_name)
-        (simple_statement
-          (opcode)
-          (register))
+        (push_statement)
         (simple_statement
           (opcode)
           (register)

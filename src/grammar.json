@@ -64,6 +64,14 @@
               },
               {
                 "type": "SYMBOL",
+                "name": "load_statement"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "push_statement"
+              },
+              {
+                "type": "SYMBOL",
                 "name": "label"
               }
             ]
@@ -110,6 +118,70 @@
               "name": "constant"
             }
           ]
+        }
+      ]
+    },
+    "load_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "ldr+"
+            },
+            {
+              "type": "PATTERN",
+              "value": "ldrh+"
+            },
+            {
+              "type": "PATTERN",
+              "value": "ldrb+"
+            },
+            {
+              "type": "PATTERN",
+              "value": "str+"
+            },
+            {
+              "type": "PATTERN",
+              "value": "strh+"
+            },
+            {
+              "type": "PATTERN",
+              "value": "strb+"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "register"
+        },
+        {
+          "type": "PATTERN",
+          "value": "(.*)"
+        }
+      ]
+    },
+    "push_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "push+"
+            },
+            {
+              "type": "PATTERN",
+              "value": "pop+"
+            }
+          ]
+        },
+        {
+          "type": "PATTERN",
+          "value": "(.*)"
         }
       ]
     },
@@ -164,19 +236,19 @@
       "members": [
         {
           "type": "PATTERN",
-          "value": "sub+"
+          "value": "sub(s)?"
         },
         {
           "type": "PATTERN",
-          "value": "add+"
+          "value": "add(s)?"
         },
         {
           "type": "PATTERN",
-          "value": "mul+"
+          "value": "mul(s)?"
         },
         {
           "type": "PATTERN",
-          "value": "mov+"
+          "value": "mov(s)?"
         },
         {
           "type": "PATTERN",
@@ -184,19 +256,15 @@
         },
         {
           "type": "PATTERN",
-          "value": "str+"
+          "value": "asr(s)?"
         },
         {
           "type": "PATTERN",
-          "value": "asr+"
+          "value": "and(s)?"
         },
         {
           "type": "PATTERN",
-          "value": "and+"
-        },
-        {
-          "type": "PATTERN",
-          "value": "bic+"
+          "value": "bic(s)?"
         },
         {
           "type": "PATTERN",
@@ -208,19 +276,11 @@
         },
         {
           "type": "PATTERN",
-          "value": "lsl+"
+          "value": "lsl(s)?"
         },
         {
           "type": "PATTERN",
-          "value": "lsr+"
-        },
-        {
-          "type": "PATTERN",
-          "value": "ldr+"
-        },
-        {
-          "type": "PATTERN",
-          "value": "push+"
+          "value": "lsr(s)?"
         }
       ]
     },
@@ -254,6 +314,10 @@
             {
               "type": "PATTERN",
               "value": "(ble)\\s+"
+            },
+            {
+              "type": "PATTERN",
+              "value": "(bge)\\s+"
             }
           ]
         },

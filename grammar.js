@@ -15,6 +15,8 @@ module.exports = grammar({
             $.math_statement,
             $.simple_statement,
             $.branch_statement,
+            $.load_statement,
+            $.push_statement,
             $.label
           )
         ),
@@ -31,6 +33,17 @@ module.exports = grammar({
         choice($.register, $.constant)
       ),
 
+    // ldr r0, []
+    load_statement: ($) =>
+      seq(
+        choice(/ldr+/, /ldrh+/, /ldrb+/, /str+/, /strh+/, /strb+/),
+        $.register,
+        /(.*)/
+      ),
+
+    // push {r0}
+    push_statement: ($) => seq(choice(/push+/, /pop+/), /(.*)/),
+
     simple_statement: ($) =>
       seq(
         $.opcode,
@@ -43,22 +56,18 @@ module.exports = grammar({
     // TODO: should I split opcodes into categories to get more descriptive?
     opcode: ($) =>
       choice(
-        /sub+/,
-        /add+/,
-        /mul+/,
-        /mov+/,
+        /sub(s)?/,
+        /add(s)?/,
+        /mul(s)?/,
+        /mov(s)?/,
         /stm+/,
-        /str+/,
-        /asr+/,
-        /and+/,
-        /bic+/,
+        /asr(s)?/,
+        /and(s)?/,
+        /bic(s)?/,
         /cmp+/,
         /ldm+/,
-        /lsl+/,
-        /lsr+/,
-        /ldr+/,
-        /push+/
-        // /pop+/, // TODO pop causes bad things to happen
+        /lsl(s)?/,
+        /lsr(s)?/
       ),
 
     return_statement: ($) => seq(/(bx)\s+/, $.register),
@@ -66,7 +75,7 @@ module.exports = grammar({
     // TODO: look into making this better for all comparisons
     branch_statement: ($) =>
       seq(
-        choice(/(bl)\s+/, /(beq)\s+/, /(ble)\s+/),
+        choice(/(bl)\s+/, /(beq)\s+/, /(ble)\s+/, /(bge)\s+/),
         choice($.identifier, $.label)
       ),
 
