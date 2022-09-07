@@ -269,7 +269,7 @@
     },
     "label": {
       "type": "PATTERN",
-      "value": "[A-z]+[:]"
+      "value": "(.*?):"
     },
     "register": {
       "type": "CHOICE",

@@ -57,7 +57,7 @@ module.exports = grammar({
         /lsr+/,
         /ldr+/,
         /push+/,
-        /pop+/
+        // /pop+/, // TODO pop causes bad things to happen
       ),
 
     return_statement: ($) => seq(/(bx)\s+/, $.register),
@@ -70,7 +70,8 @@ module.exports = grammar({
       ),
 
     // TODO: look into making this better
-    label: ($) => /[A-z]+[:]/,
+    // Somehow grab everything before the : too
+    label: ($) => /(.*?):/,
 
     register: ($) => choice(/[r]\d+/, /sp/, /lr/, /pc/),
 

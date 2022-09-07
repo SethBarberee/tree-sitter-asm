@@ -1,5 +1,5 @@
-hello,
-@    ^ punctuation.delimiter
+,
+@ <- punctuation.delimiter
 
 @ hello
 @ <- comment
