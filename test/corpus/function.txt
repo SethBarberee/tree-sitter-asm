@@ -64,6 +64,6 @@ test:
           (register)
           (constant))
         (branch_statement
-            (identifier))
+            (label))
         (return_statement
           (register))))

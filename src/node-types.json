@@ -8,10 +8,6 @@
       "required": true,
       "types": [
         {
-          "type": "identifier",
-          "named": true
-        },
-        {
           "type": "label",
           "named": true
         }
@@ -54,6 +50,10 @@
         },
         {
           "type": "math_statement",
+          "named": true
+        },
+        {
+          "type": "pool_statement",
           "named": true
         },
         {
@@ -113,6 +113,25 @@
     "type": "opcode",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "pool_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "directive",
+          "named": true
+        },
+        {
+          "type": "label",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "push_statement",
@@ -195,10 +214,6 @@
   },
   {
     "type": "func_name",
-    "named": true
-  },
-  {
-    "type": "identifier",
     "named": true
   },
   {

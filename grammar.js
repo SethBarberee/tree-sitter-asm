@@ -17,6 +17,7 @@ module.exports = grammar({
             $.branch_statement,
             $.load_statement,
             $.push_statement,
+            $.pool_statement,
             $.label
           )
         ),
@@ -34,14 +35,15 @@ module.exports = grammar({
       ),
 
     // ldr r0, []
+    // TODO: cheating here and combining ldr and ldm when they are somewhat different
     load_statement: ($) =>
-      seq(
-        choice(/ldr+/, /ldrh+/, /ldrb+/, /str+/, /strh+/, /strb+/),
-        $.register,
-        /(.*)/
-      ),
+      seq(choice(/ld([a-z]+)?/, /st([a-z]+)?/), $.register, /(.*)/),
 
-    // push {r0}
+    pool_statement: ($) => seq($.label, $.directive),
+
+    // TODO deal with the variable length of registers in the {}
+    // pop {r0}
+    // pop {r0 - r1}
     push_statement: ($) => seq(choice(/push+/, /pop+/), /(.*)/),
 
     simple_statement: ($) =>
@@ -60,12 +62,10 @@ module.exports = grammar({
         /add(s)?/,
         /mul(s)?/,
         /mov(s)?/,
-        /stm+/,
         /asr(s)?/,
         /and(s)?/,
         /bic(s)?/,
         /cmp+/,
-        /ldm+/,
         /lsl(s)?/,
         /lsr(s)?/
       ),
@@ -75,12 +75,17 @@ module.exports = grammar({
     // TODO: look into making this better for all comparisons
     branch_statement: ($) =>
       seq(
-        choice(/(bl)\s+/, /(beq)\s+/, /(ble)\s+/, /(bge)\s+/),
-        choice($.identifier, $.label)
+        choice(
+          /(bl)\s+/,
+          /(beq)\s+/,
+          /(bne)\s+/,
+          /(bcs)\s+/,
+          /(bl([a-z]+)?)\s+/,
+          /(bg([a-z]+)?)\s+/
+        ),
+        alias($.identifier, $.label)
       ),
 
-    // TODO: look into making this better
-    // Somehow grab everything before the : too
     label: ($) => /(.*?):/,
 
     register: ($) => choice(/[r]\d+/, /sp/, /lr/, /pc/),

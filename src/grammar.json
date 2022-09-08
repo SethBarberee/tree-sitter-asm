@@ -72,6 +72,10 @@
               },
               {
                 "type": "SYMBOL",
+                "name": "pool_statement"
+              },
+              {
+                "type": "SYMBOL",
                 "name": "label"
               }
             ]
@@ -129,27 +133,11 @@
           "members": [
             {
               "type": "PATTERN",
-              "value": "ldr+"
+              "value": "ld([a-z]+)?"
             },
             {
               "type": "PATTERN",
-              "value": "ldrh+"
-            },
-            {
-              "type": "PATTERN",
-              "value": "ldrb+"
-            },
-            {
-              "type": "PATTERN",
-              "value": "str+"
-            },
-            {
-              "type": "PATTERN",
-              "value": "strh+"
-            },
-            {
-              "type": "PATTERN",
-              "value": "strb+"
+              "value": "st([a-z]+)?"
             }
           ]
         },
@@ -160,6 +148,19 @@
         {
           "type": "PATTERN",
           "value": "(.*)"
+        }
+      ]
+    },
+    "pool_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "label"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "directive"
         }
       ]
     },
@@ -252,10 +253,6 @@
         },
         {
           "type": "PATTERN",
-          "value": "stm+"
-        },
-        {
-          "type": "PATTERN",
           "value": "asr(s)?"
         },
         {
@@ -269,10 +266,6 @@
         {
           "type": "PATTERN",
           "value": "cmp+"
-        },
-        {
-          "type": "PATTERN",
-          "value": "ldm+"
         },
         {
           "type": "PATTERN",
@@ -313,26 +306,30 @@
             },
             {
               "type": "PATTERN",
-              "value": "(ble)\\s+"
+              "value": "(bne)\\s+"
             },
             {
               "type": "PATTERN",
-              "value": "(bge)\\s+"
+              "value": "(bcs)\\s+"
+            },
+            {
+              "type": "PATTERN",
+              "value": "(bl([a-z]+)?)\\s+"
+            },
+            {
+              "type": "PATTERN",
+              "value": "(bg([a-z]+)?)\\s+"
             }
           ]
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "identifier"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "label"
-            }
-          ]
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          },
+          "named": true,
+          "value": "label"
         }
       ]
     },
