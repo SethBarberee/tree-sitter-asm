@@ -1,12 +1,21 @@
 [
   {
+    "type": "branch_opcode",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "branch_statement",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "branch_opcode",
+          "named": true
+        },
         {
           "type": "label",
           "named": true
@@ -72,13 +81,22 @@
     }
   },
   {
+    "type": "load_opcode",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "load_statement",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "load_opcode",
+          "named": true
+        },
         {
           "type": "register",
           "named": true
@@ -134,9 +152,24 @@
     }
   },
   {
-    "type": "push_statement",
+    "type": "push_opcode",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "push_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "push_opcode",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "register",

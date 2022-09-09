@@ -33,6 +33,7 @@ test:
   (function_definition
     (func_name)
         (load_statement
+          (load_opcode)
           (register))
         (return_statement
           (register))))
@@ -54,7 +55,8 @@ test:
 (source_file
   (function_definition
     (func_name)
-        (push_statement)
+        (push_statement
+            (push_opcode))
         (simple_statement
           (opcode)
           (register)
@@ -64,6 +66,59 @@ test:
           (register)
           (constant))
         (branch_statement
+            (branch_opcode)
             (label))
         (return_statement
           (register))))
+
+=================================================
+double function back to back
+=================================================
+
+test:
+    push lr
+    mov r0, 0
+    mov r0, 0x1
+    bl MemoryAlloc
+    bx lr
+test2:
+    push lr
+    mov r0, 0
+    mov r0, 0x1
+    bx lr
+
+------------------------------------------------
+
+(source_file
+  (function_definition
+    (func_name)
+        (push_statement
+            (push_opcode))
+        (simple_statement
+          (opcode)
+          (register)
+          (constant))
+        (simple_statement
+          (opcode)
+          (register)
+          (constant))
+        (branch_statement
+            (branch_opcode)
+            (label))
+        (return_statement
+          (register)))
+  (function_definition
+    (func_name)
+        (push_statement
+            (push_opcode))
+        (simple_statement
+          (opcode)
+          (register)
+          (constant))
+        (simple_statement
+          (opcode)
+          (register)
+          (constant))
+        (return_statement
+          (register))))
+

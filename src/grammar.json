@@ -129,17 +129,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "PATTERN",
-              "value": "ld([a-z]+)?"
-            },
-            {
-              "type": "PATTERN",
-              "value": "st([a-z]+)?"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "load_opcode"
         },
         {
           "type": "SYMBOL",
@@ -148,6 +139,19 @@
         {
           "type": "PATTERN",
           "value": "(.*)"
+        }
+      ]
+    },
+    "load_opcode": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "ld([a-z]+)?"
+        },
+        {
+          "type": "PATTERN",
+          "value": "st([a-z]+)?"
         }
       ]
     },
@@ -168,21 +172,25 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "PATTERN",
-              "value": "push+"
-            },
-            {
-              "type": "PATTERN",
-              "value": "pop+"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "push_opcode"
         },
         {
           "type": "PATTERN",
           "value": "(.*)"
+        }
+      ]
+    },
+    "push_opcode": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "push+"
+        },
+        {
+          "type": "PATTERN",
+          "value": "pop+"
         }
       ]
     },
@@ -294,33 +302,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "PATTERN",
-              "value": "(bl)\\s+"
-            },
-            {
-              "type": "PATTERN",
-              "value": "(beq)\\s+"
-            },
-            {
-              "type": "PATTERN",
-              "value": "(bne)\\s+"
-            },
-            {
-              "type": "PATTERN",
-              "value": "(bcs)\\s+"
-            },
-            {
-              "type": "PATTERN",
-              "value": "(bl([a-z]+)?)\\s+"
-            },
-            {
-              "type": "PATTERN",
-              "value": "(bg([a-z]+)?)\\s+"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "branch_opcode"
         },
         {
           "type": "ALIAS",
@@ -330,6 +313,35 @@
           },
           "named": true,
           "value": "label"
+        }
+      ]
+    },
+    "branch_opcode": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "(bl)\\s+"
+        },
+        {
+          "type": "PATTERN",
+          "value": "(beq)\\s+"
+        },
+        {
+          "type": "PATTERN",
+          "value": "(bne)\\s+"
+        },
+        {
+          "type": "PATTERN",
+          "value": "(bcs)\\s+"
+        },
+        {
+          "type": "PATTERN",
+          "value": "(bl([a-z]+)?)\\s+"
+        },
+        {
+          "type": "PATTERN",
+          "value": "(bg([a-z]+)?)\\s+"
         }
       ]
     },

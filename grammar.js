@@ -36,15 +36,18 @@ module.exports = grammar({
 
     // ldr r0, []
     // TODO: cheating here and combining ldr and ldm when they are somewhat different
-    load_statement: ($) =>
-      seq(choice(/ld([a-z]+)?/, /st([a-z]+)?/), $.register, /(.*)/),
+    load_statement: ($) => seq($.load_opcode, $.register, /(.*)/),
+
+    load_opcode: ($) => choice(/ld([a-z]+)?/, /st([a-z]+)?/),
 
     pool_statement: ($) => seq($.label, $.directive),
 
     // TODO deal with the variable length of registers in the {}
     // pop {r0}
     // pop {r0 - r1}
-    push_statement: ($) => seq(choice(/push+/, /pop+/), /(.*)/),
+    push_statement: ($) => seq($.push_opcode, /(.*)/),
+
+    push_opcode: ($) => choice(/push+/, /pop+/),
 
     simple_statement: ($) =>
       seq(
@@ -73,17 +76,16 @@ module.exports = grammar({
     return_statement: ($) => seq(/(bx)\s+/, $.register),
 
     // TODO: look into making this better for all comparisons
-    branch_statement: ($) =>
-      seq(
-        choice(
-          /(bl)\s+/,
-          /(beq)\s+/,
-          /(bne)\s+/,
-          /(bcs)\s+/,
-          /(bl([a-z]+)?)\s+/,
-          /(bg([a-z]+)?)\s+/
-        ),
-        alias($.identifier, $.label)
+    branch_statement: ($) => seq($.branch_opcode, alias($.identifier, $.label)),
+
+    branch_opcode: ($) =>
+      choice(
+        /(bl)\s+/,
+        /(beq)\s+/,
+        /(bne)\s+/,
+        /(bcs)\s+/,
+        /(bl([a-z]+)?)\s+/,
+        /(bg([a-z]+)?)\s+/
       ),
 
     label: ($) => /(.*?):/,
