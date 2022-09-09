@@ -10,7 +10,7 @@ module.exports = grammar({
     function_definition: ($) =>
       seq(
         alias($.label, $.func_name),
-        repeat1(
+        repeat(
           choice(
             $.math_statement,
             $.simple_statement,
@@ -68,7 +68,11 @@ module.exports = grammar({
         /asr(s)?/,
         /and(s)?/,
         /bic(s)?/,
+        /orr(s)?/,
+        /neg(s)?/,
+        /mvn(s)?/,
         /cmp+/,
+        /tst+/,
         /lsl(s)?/,
         /lsr(s)?/
       ),
@@ -84,6 +88,10 @@ module.exports = grammar({
         /(beq)\s+/,
         /(bne)\s+/,
         /(bcs)\s+/,
+        /(bcc)\s+/,
+        /(bhi)\s+/,
+        /(bhs)\s+/,
+        /(bpl)\s+/,
         /(bl([a-z]+)?)\s+/,
         /(bg([a-z]+)?)\s+/
       ),

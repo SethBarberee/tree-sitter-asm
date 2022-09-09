@@ -46,7 +46,7 @@
           "value": "func_name"
         },
         {
-          "type": "REPEAT1",
+          "type": "REPEAT",
           "content": {
             "type": "CHOICE",
             "members": [
@@ -273,7 +273,23 @@
         },
         {
           "type": "PATTERN",
+          "value": "orr(s)?"
+        },
+        {
+          "type": "PATTERN",
+          "value": "neg(s)?"
+        },
+        {
+          "type": "PATTERN",
+          "value": "mvn(s)?"
+        },
+        {
+          "type": "PATTERN",
           "value": "cmp+"
+        },
+        {
+          "type": "PATTERN",
+          "value": "tst+"
         },
         {
           "type": "PATTERN",
@@ -334,6 +350,22 @@
         {
           "type": "PATTERN",
           "value": "(bcs)\\s+"
+        },
+        {
+          "type": "PATTERN",
+          "value": "(bcc)\\s+"
+        },
+        {
+          "type": "PATTERN",
+          "value": "(bhi)\\s+"
+        },
+        {
+          "type": "PATTERN",
+          "value": "(bhs)\\s+"
+        },
+        {
+          "type": "PATTERN",
+          "value": "(bpl)\\s+"
         },
         {
           "type": "PATTERN",
