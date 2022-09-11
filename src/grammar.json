@@ -25,10 +25,6 @@
           {
             "type": "SYMBOL",
             "name": "directive"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "comment"
           }
         ]
       }
@@ -126,19 +122,24 @@
       ]
     },
     "load_statement": {
-      "type": "SEQ",
+      "type": "CHOICE",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "load_opcode"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "register"
-        },
-        {
-          "type": "PATTERN",
-          "value": "(.*)"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "load_opcode"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "register"
+            },
+            {
+              "type": "PATTERN",
+              "value": "(.*)"
+            }
+          ]
         }
       ]
     },
@@ -152,6 +153,10 @@
         {
           "type": "PATTERN",
           "value": "st([a-z]+)?"
+        },
+        {
+          "type": "PATTERN",
+          "value": "adr"
         }
       ]
     },
@@ -249,7 +254,11 @@
         },
         {
           "type": "PATTERN",
-          "value": "add([a-z]+)?"
+          "value": "sbc([a-z]+)?"
+        },
+        {
+          "type": "PATTERN",
+          "value": "ad[dc]([a-z]+)?"
         },
         {
           "type": "PATTERN",
@@ -277,7 +286,7 @@
         },
         {
           "type": "PATTERN",
-          "value": "orr([a-z]+)?"
+          "value": "or[rn]([a-z]+)?"
         },
         {
           "type": "PATTERN",
@@ -289,11 +298,27 @@
         },
         {
           "type": "PATTERN",
-          "value": "cmp([a-z]+)?"
+          "value": "cm[pn]([a-z]+)?"
+        },
+        {
+          "type": "PATTERN",
+          "value": "rs[bc]([a-z]+)?"
         },
         {
           "type": "PATTERN",
           "value": "tst([a-z]+)?"
+        },
+        {
+          "type": "PATTERN",
+          "value": "teq([a-z]+)?"
+        },
+        {
+          "type": "PATTERN",
+          "value": "mar([a-z]+)?"
+        },
+        {
+          "type": "PATTERN",
+          "value": "mra([a-z]+)?"
         },
         {
           "type": "PATTERN",
@@ -310,6 +335,10 @@
         {
           "type": "PATTERN",
           "value": "smlal([a-z]+)?"
+        },
+        {
+          "type": "PATTERN",
+          "value": "nop"
         }
       ]
     },
@@ -447,8 +476,20 @@
   },
   "extras": [
     {
+      "type": "SYMBOL",
+      "name": "comment"
+    },
+    {
       "type": "PATTERN",
       "value": "\\s"
+    },
+    {
+      "type": "PATTERN",
+      "value": "\\\\\\r?\\n"
+    },
+    {
+      "type": "PATTERN",
+      "value": "\\\\( |\\t|\\v|\\f)"
     }
   ],
   "conflicts": [],

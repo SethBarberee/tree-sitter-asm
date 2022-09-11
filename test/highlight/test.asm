@@ -4,8 +4,16 @@
 @ hello
 @ <- comment
 
-@ TODO need to fix comment nesting for rest of highlight testing to work
 test:
-    add r0, r0, 0
+@ <- function
+    add r0, r0, 0        @ mixed comment
+@   ^ keyword
+@       ^ identifier
+@           ^ identifier
+@               ^ constant
+@                        ^ comment
+_hello:
+@ <- label
     bx lr
+@   ^ keyword
 @      ^ identifier

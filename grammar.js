@@ -1,11 +1,12 @@
 module.exports = grammar({
   name: "asm",
 
+  extras: ($) => [$.comment, /\s/, /\\\r?\n/, /\\( |\t|\v|\f)/],
+
   rules: {
     source_file: ($) => optional($._statement),
 
-    _statement: ($) =>
-      repeat1(choice($.function_definition, $.directive, $.comment)),
+    _statement: ($) => repeat1(choice($.function_definition, $.directive)),
 
     function_definition: ($) =>
       seq(
@@ -36,9 +37,17 @@ module.exports = grammar({
 
     // ldr r0, []
     // TODO: cheating here and combining ldr and ldm when they are somewhat different
-    load_statement: ($) => seq($.load_opcode, $.register, /(.*)/),
+    load_statement: ($) =>
+      choice(
+        seq($.load_opcode, $.register, /(.*)/)
+        //$.ldm_statement,
+      ),
 
-    load_opcode: ($) => choice(/ld([a-z]+)?/, /st([a-z]+)?/),
+    //ldm_statement: ($) => seq($.ldm_opcode, $.register, optional("!"), /,\s+\{/, $.register, /(.*)/),
+
+    //ldm_opcode: ($) => choice(/ldm([a-z]+)?/, /stm([a-z]+)?/),
+    //load_opcode: ($) => choice(/ldr([a-z]+)?/, /str([a-z]+)?/),
+    load_opcode: ($) => choice(/ld([a-z]+)?/, /st([a-z]+)?/, /adr/),
 
     pool_statement: ($) => seq($.label, $.directive),
 
@@ -62,22 +71,28 @@ module.exports = grammar({
     opcode: ($) =>
       choice(
         /sub([a-z]+)?/,
-        /add([a-z]+)?/,
+        /sbc([a-z]+)?/,
+        /ad[dc]([a-z]+)?/, // add/adc
         /mul([a-z]+)?/,
         /mov([a-z]+)?/,
         /[la]s[lr]([a-z]+)?/, // lsr, lsl, asl, asr
         /and([a-z]+)?/,
         /bic([a-z]+)?/,
         /eor([a-z]+)?/,
-        /orr([a-z]+)?/,
+        /or[rn]([a-z]+)?/, // orr, orn
         /neg([a-z]+)?/,
         /mvn([a-z]+)?/,
-        /cmp([a-z]+)?/,
+        /cm[pn]([a-z]+)?/, // cmp, cmn
+        /rs[bc]([a-z]+)?/, // rsb/rsc
         /tst([a-z]+)?/,
+        /teq([a-z]+)?/,
+        /mar([a-z]+)?/,
+        /mra([a-z]+)?/,
         /umull([a-z]+)?/,
         /umlal([a-z]+)?/,
         /smull([a-z]+)?/,
         /smlal([a-z]+)?/,
+        /nop/
       ),
 
     return_statement: ($) => seq($.branch_opcode, $.register),

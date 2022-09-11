@@ -75,6 +75,40 @@ test:
           (register))))
 
 =================================================
+basic function w/ push reglist and branch
+=================================================
+
+test:
+    push {r0-r1}
+    mov r0, 0
+    mov r0, 0x1
+    bl MemoryAlloc
+    bx lr
+
+------------------------------------------------
+
+(source_file
+  (function_definition
+    (func_name)
+        (push_statement
+            (push_opcode))
+        (simple_statement
+          (opcode)
+          (register)
+          (constant))
+        (simple_statement
+          (opcode)
+          (register)
+          (constant))
+        (branch_statement
+            (branch_opcode)
+            (label))
+        (return_statement
+          (branch_opcode)
+          (register))))
+
+
+=================================================
 double function back to back
 =================================================
 
