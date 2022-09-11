@@ -181,9 +181,13 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "branch_opcode",
+          "named": true
+        },
         {
           "type": "register",
           "named": true

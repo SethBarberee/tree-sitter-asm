@@ -245,59 +245,71 @@
       "members": [
         {
           "type": "PATTERN",
-          "value": "sub(s)?"
+          "value": "sub([a-z]+)?"
         },
         {
           "type": "PATTERN",
-          "value": "add(s)?"
+          "value": "add([a-z]+)?"
         },
         {
           "type": "PATTERN",
-          "value": "mul(s)?"
+          "value": "mul([a-z]+)?"
         },
         {
           "type": "PATTERN",
-          "value": "mov(s)?"
+          "value": "mov([a-z]+)?"
         },
         {
           "type": "PATTERN",
-          "value": "asr(s)?"
+          "value": "[la]s[lr]([a-z]+)?"
         },
         {
           "type": "PATTERN",
-          "value": "and(s)?"
+          "value": "and([a-z]+)?"
         },
         {
           "type": "PATTERN",
-          "value": "bic(s)?"
+          "value": "bic([a-z]+)?"
         },
         {
           "type": "PATTERN",
-          "value": "orr(s)?"
+          "value": "eor([a-z]+)?"
         },
         {
           "type": "PATTERN",
-          "value": "neg(s)?"
+          "value": "orr([a-z]+)?"
         },
         {
           "type": "PATTERN",
-          "value": "mvn(s)?"
+          "value": "neg([a-z]+)?"
         },
         {
           "type": "PATTERN",
-          "value": "cmp+"
+          "value": "mvn([a-z]+)?"
         },
         {
           "type": "PATTERN",
-          "value": "tst+"
+          "value": "cmp([a-z]+)?"
         },
         {
           "type": "PATTERN",
-          "value": "lsl(s)?"
+          "value": "tst([a-z]+)?"
         },
         {
           "type": "PATTERN",
-          "value": "lsr(s)?"
+          "value": "umull([a-z]+)?"
+        },
+        {
+          "type": "PATTERN",
+          "value": "umlal([a-z]+)?"
+        },
+        {
+          "type": "PATTERN",
+          "value": "smull([a-z]+)?"
+        },
+        {
+          "type": "PATTERN",
+          "value": "smlal([a-z]+)?"
         }
       ]
     },
@@ -305,8 +317,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "PATTERN",
-          "value": "(bx)\\s+"
+          "type": "SYMBOL",
+          "name": "branch_opcode"
         },
         {
           "type": "SYMBOL",
@@ -337,7 +349,7 @@
       "members": [
         {
           "type": "PATTERN",
-          "value": "(bl)\\s+"
+          "value": "(b)\\s+"
         },
         {
           "type": "PATTERN",
@@ -349,23 +361,19 @@
         },
         {
           "type": "PATTERN",
-          "value": "(bcs)\\s+"
+          "value": "(bc([a-z]+)?)\\s+"
         },
         {
           "type": "PATTERN",
-          "value": "(bcc)\\s+"
-        },
-        {
-          "type": "PATTERN",
-          "value": "(bhi)\\s+"
-        },
-        {
-          "type": "PATTERN",
-          "value": "(bhs)\\s+"
+          "value": "(bh([a-z]+)?)\\s+"
         },
         {
           "type": "PATTERN",
           "value": "(bpl)\\s+"
+        },
+        {
+          "type": "PATTERN",
+          "value": "(bx)\\s+"
         },
         {
           "type": "PATTERN",

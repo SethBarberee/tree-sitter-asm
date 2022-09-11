@@ -9,9 +9,11 @@
 (func_name) @function
 (label) @label
 
-(load_opcode) @keyword
-(branch_opcode) @keyword
-(push_opcode) @keyword
-(opcode) @keyword
+[
+    (load_opcode)
+    (branch_opcode)
+    (push_opcode)
+    (opcode)
+ ] @keyword
 
 (ERROR) @error

@@ -61,37 +61,40 @@ module.exports = grammar({
     // TODO: should I split opcodes into categories to get more descriptive?
     opcode: ($) =>
       choice(
-        /sub(s)?/,
-        /add(s)?/,
-        /mul(s)?/,
-        /mov(s)?/,
-        /asr(s)?/,
-        /and(s)?/,
-        /bic(s)?/,
-        /orr(s)?/,
-        /neg(s)?/,
-        /mvn(s)?/,
-        /cmp+/,
-        /tst+/,
-        /lsl(s)?/,
-        /lsr(s)?/
+        /sub([a-z]+)?/,
+        /add([a-z]+)?/,
+        /mul([a-z]+)?/,
+        /mov([a-z]+)?/,
+        /[la]s[lr]([a-z]+)?/, // lsr, lsl, asl, asr
+        /and([a-z]+)?/,
+        /bic([a-z]+)?/,
+        /eor([a-z]+)?/,
+        /orr([a-z]+)?/,
+        /neg([a-z]+)?/,
+        /mvn([a-z]+)?/,
+        /cmp([a-z]+)?/,
+        /tst([a-z]+)?/,
+        /umull([a-z]+)?/,
+        /umlal([a-z]+)?/,
+        /smull([a-z]+)?/,
+        /smlal([a-z]+)?/,
       ),
 
-    return_statement: ($) => seq(/(bx)\s+/, $.register),
+    return_statement: ($) => seq($.branch_opcode, $.register),
 
     // TODO: look into making this better for all comparisons
     branch_statement: ($) => seq($.branch_opcode, alias($.identifier, $.label)),
 
+    // TODO: make this simpler
     branch_opcode: ($) =>
       choice(
-        /(bl)\s+/,
+        /(b)\s+/,
         /(beq)\s+/,
         /(bne)\s+/,
-        /(bcs)\s+/,
-        /(bcc)\s+/,
-        /(bhi)\s+/,
-        /(bhs)\s+/,
+        /(bc([a-z]+)?)\s+/,
+        /(bh([a-z]+)?)\s+/,
         /(bpl)\s+/,
+        /(bx)\s+/,
         /(bl([a-z]+)?)\s+/,
         /(bg([a-z]+)?)\s+/
       ),

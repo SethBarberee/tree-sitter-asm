@@ -17,6 +17,7 @@ test:
           (register)
           (register))
         (return_statement
+          (branch_opcode)
           (register))))
 
 =================================================
@@ -36,6 +37,7 @@ test:
           (load_opcode)
           (register))
         (return_statement
+          (branch_opcode)
           (register))))
 
 
@@ -69,6 +71,7 @@ test:
             (branch_opcode)
             (label))
         (return_statement
+          (branch_opcode)
           (register))))
 
 =================================================
@@ -106,6 +109,7 @@ test2:
             (branch_opcode)
             (label))
         (return_statement
+          (branch_opcode)
           (register)))
   (function_definition
     (func_name)
@@ -120,5 +124,6 @@ test2:
           (register)
           (constant))
         (return_statement
+          (branch_opcode)
           (register))))
 

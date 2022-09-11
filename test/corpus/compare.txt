@@ -16,4 +16,5 @@ test:
             (register)
             (constant))
         (return_statement
+            (branch_opcode)
             (register))))
