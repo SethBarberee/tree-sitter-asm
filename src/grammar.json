@@ -471,7 +471,7 @@
     },
     "identifier": {
       "type": "PATTERN",
-      "value": "[A-z]+.*"
+      "value": "[_A-z0-9]+"
     }
   },
   "extras": [

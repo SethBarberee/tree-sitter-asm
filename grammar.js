@@ -124,6 +124,6 @@ module.exports = grammar({
 
     constant: ($) => choice(/\d+/, /0[xX][0-9a-fA-F]+/),
 
-    identifier: ($) => /[A-z]+.*/,
+    identifier: ($) => /[_A-z0-9]+/,
   },
 });
