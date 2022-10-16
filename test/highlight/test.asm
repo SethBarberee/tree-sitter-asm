@@ -4,6 +4,9 @@
 @ hello
 @ <- comment
 
+# hello
+@ <- comment
+
 test:
 @ <- function
     add r0, r0, 0        @ mixed comment

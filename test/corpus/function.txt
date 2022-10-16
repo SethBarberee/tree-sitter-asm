@@ -10,15 +10,16 @@ test:
 
 (source_file
   (function_definition
-    (func_name)
-        (math_statement
-          (opcode)
-          (register)
-          (register)
-          (register))
-        (return_statement
-          (branch_opcode)
-          (register))))
+    (func_name
+        (identifier))
+    (math_statement
+      (opcode)
+      (register)
+      (register)
+      (register))
+    (return_statement
+      (branch_opcode)
+      (register))))
 
 =================================================
 basic load function
@@ -32,13 +33,14 @@ test:
 
 (source_file
   (function_definition
-    (func_name)
-        (load_statement
-          (load_opcode)
-          (register))
-        (return_statement
-          (branch_opcode)
-          (register))))
+    (func_name
+        (identifier))
+    (load_statement
+      (load_opcode)
+      (register))
+    (return_statement
+      (branch_opcode)
+      (register))))
 
 
 =================================================
@@ -56,23 +58,24 @@ test:
 
 (source_file
   (function_definition
-    (func_name)
-        (push_statement
-            (push_opcode))
-        (simple_statement
-          (opcode)
-          (register)
-          (constant))
-        (simple_statement
-          (opcode)
-          (register)
-          (constant))
-        (branch_statement
-            (branch_opcode)
-            (label))
-        (return_statement
-          (branch_opcode)
-          (register))))
+    (func_name
+        (identifier))
+    (push_statement
+        (push_opcode))
+    (simple_statement
+      (opcode)
+      (register)
+      (constant))
+    (simple_statement
+      (opcode)
+      (register)
+      (constant))
+    (branch_statement
+        (branch_opcode)
+        (label))
+    (return_statement
+      (branch_opcode)
+      (register))))
 
 =================================================
 basic function w/ push reglist and branch
@@ -89,23 +92,24 @@ test:
 
 (source_file
   (function_definition
-    (func_name)
-        (push_statement
-            (push_opcode))
-        (simple_statement
-          (opcode)
-          (register)
-          (constant))
-        (simple_statement
-          (opcode)
-          (register)
-          (constant))
-        (branch_statement
-            (branch_opcode)
-            (label))
-        (return_statement
-          (branch_opcode)
-          (register))))
+    (func_name
+        (identifier))
+    (push_statement
+        (push_opcode))
+    (simple_statement
+      (opcode)
+      (register)
+      (constant))
+    (simple_statement
+      (opcode)
+      (register)
+      (constant))
+    (branch_statement
+        (branch_opcode)
+        (label))
+    (return_statement
+      (branch_opcode)
+      (register))))
 
 
 =================================================
@@ -128,36 +132,38 @@ test2:
 
 (source_file
   (function_definition
-    (func_name)
-        (push_statement
-            (push_opcode))
-        (simple_statement
-          (opcode)
-          (register)
-          (constant))
-        (simple_statement
-          (opcode)
-          (register)
-          (constant))
-        (branch_statement
-            (branch_opcode)
-            (label))
-        (return_statement
-          (branch_opcode)
-          (register)))
+    (func_name
+        (identifier))
+    (push_statement
+        (push_opcode))
+    (simple_statement
+      (opcode)
+      (register)
+      (constant))
+    (simple_statement
+      (opcode)
+      (register)
+      (constant))
+    (branch_statement
+        (branch_opcode)
+        (label))
+    (return_statement
+      (branch_opcode)
+      (register)))
   (function_definition
-    (func_name)
-        (push_statement
-            (push_opcode))
-        (simple_statement
-          (opcode)
-          (register)
-          (constant))
-        (simple_statement
-          (opcode)
-          (register)
-          (constant))
-        (return_statement
-          (branch_opcode)
-          (register))))
+    (func_name
+        (identifier))
+    (push_statement
+        (push_opcode))
+    (simple_statement
+      (opcode)
+      (register)
+      (constant))
+    (simple_statement
+      (opcode)
+      (register)
+      (constant))
+    (return_statement
+      (branch_opcode)
+      (register))))
 

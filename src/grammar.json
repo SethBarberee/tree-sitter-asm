@@ -1,5 +1,6 @@
 {
   "name": "asm",
+  "word": "identifier",
   "rules": {
     "source_file": {
       "type": "CHOICE",
@@ -415,8 +416,17 @@
       ]
     },
     "label": {
-      "type": "PATTERN",
-      "value": "(.*?):"
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "STRING",
+          "value": ":"
+        }
+      ]
     },
     "register": {
       "type": "CHOICE",
@@ -444,17 +454,38 @@
       "value": "[.][0-9a-zA-Z]+.*"
     },
     "comment": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "@.*"
-        },
-        {
-          "type": "PATTERN",
-          "value": "#.*"
-        }
-      ]
+      "type": "TOKEN",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "@"
+              },
+              {
+                "type": "PATTERN",
+                "value": "(\\\\(.|\\r?\\n)|[^\\\\\\n])*"
+              }
+            ]
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "#"
+              },
+              {
+                "type": "PATTERN",
+                "value": "(\\\\(.|\\r?\\n)|[^\\\\\\n])*"
+              }
+            ]
+          }
+        ]
+      }
     },
     "constant": {
       "type": "CHOICE",

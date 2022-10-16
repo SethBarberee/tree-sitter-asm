@@ -10,11 +10,12 @@ test:
 
 (source_file
   (function_definition
-    (func_name)
-        (simple_statement
-            (opcode)
-            (register)
-            (constant))
-        (return_statement
-            (branch_opcode)
-            (register))))
+    (func_name
+        (identifier))
+    (simple_statement
+        (opcode)
+        (register)
+        (constant))
+    (return_statement
+        (branch_opcode)
+        (register))))

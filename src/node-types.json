@@ -24,14 +24,24 @@
     }
   },
   {
-    "type": "comment",
+    "type": "constant",
     "named": true,
     "fields": {}
   },
   {
-    "type": "constant",
+    "type": "func_name",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "function_definition",
@@ -75,6 +85,21 @@
         },
         {
           "type": "simple_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "label",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
           "named": true
         }
       ]
@@ -242,15 +267,19 @@
     "named": false
   },
   {
+    "type": ":",
+    "named": false
+  },
+  {
+    "type": "comment",
+    "named": true
+  },
+  {
     "type": "directive",
     "named": true
   },
   {
-    "type": "func_name",
-    "named": true
-  },
-  {
-    "type": "label",
+    "type": "identifier",
     "named": true
   }
 ]

@@ -1,6 +1,8 @@
 module.exports = grammar({
   name: "asm",
 
+  word: ($) => $.identifier,
+
   extras: ($) => [$.comment, /\s/, /\\\r?\n/, /\\( |\t|\v|\f)/],
 
   rules: {
@@ -114,16 +116,32 @@ module.exports = grammar({
         /(bg([a-z]+)?)\s+/
       ),
 
-    label: ($) => /(.*?):/,
+    //label: ($) => /(.*?):/,
+    label: ($) => seq($.identifier, ':'),
 
     register: ($) => choice(/[r]\d+/, /sp/, /lr/, /pc/),
 
     directive: ($) => /[.][0-9a-zA-Z]+.*/,
+    //directive: ($) => prec.left(1, seq(/[.][0-9a-zA-Z]+/, commaSep($.identifier))),
 
-    comment: ($) => choice(/@.*/, /#.*/),
+    comment: ($) => token(choice(
+                seq('@', /(\\(.|\r?\n)|[^\\\n])*/),
+                seq('#', /(\\(.|\r?\n)|[^\\\n])*/))),
 
     constant: ($) => choice(/\d+/, /0[xX][0-9a-fA-F]+/),
 
     identifier: ($) => /[_A-z0-9]+/,
   },
 });
+
+function commaSep (rule) {
+  return optional(commaSep1(rule))
+}
+
+function commaSep1 (rule) {
+  return seq(rule, repeat(seq(',', rule)))
+}
+
+function commaSepTrailing (recurSymbol, rule) {
+  return choice(rule, seq(recurSymbol, ',', rule))
+}
