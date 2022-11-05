@@ -12,7 +12,8 @@
 
 [
     (load_opcode)
-    ;(ldm_opcode)
+    (ldm_opcode)
+    (adr_opcode)
     (branch_opcode)
     (push_opcode)
     (opcode)

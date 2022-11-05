@@ -92,41 +92,53 @@
           "name": "opcode"
         },
         {
-          "type": "SYMBOL",
-          "name": "register"
+          "type": "FIELD",
+          "name": "Rd",
+          "content": {
+            "type": "SYMBOL",
+            "name": "register"
+          }
         },
         {
           "type": "STRING",
           "value": ","
         },
         {
-          "type": "SYMBOL",
-          "name": "register"
+          "type": "FIELD",
+          "name": "Rn",
+          "content": {
+            "type": "SYMBOL",
+            "name": "register"
+          }
         },
         {
           "type": "STRING",
           "value": ","
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "register"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "constant"
-            }
-          ]
+          "type": "FIELD",
+          "name": "operand2",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "register"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "constant"
+              }
+            ]
+          }
         }
       ]
     },
     "load_statement": {
-      "type": "CHOICE",
+      "type": "SEQ",
       "members": [
         {
-          "type": "SEQ",
+          "type": "CHOICE",
           "members": [
             {
               "type": "SYMBOL",
@@ -134,13 +146,38 @@
             },
             {
               "type": "SYMBOL",
-              "name": "register"
+              "name": "ldm_opcode"
             },
             {
-              "type": "PATTERN",
-              "value": "(.*)"
+              "type": "SYMBOL",
+              "name": "adr_opcode"
             }
           ]
+        },
+        {
+          "type": "FIELD",
+          "name": "Rt",
+          "content": {
+            "type": "SYMBOL",
+            "name": "register"
+          }
+        },
+        {
+          "type": "PATTERN",
+          "value": "(.*)"
+        }
+      ]
+    },
+    "ldm_opcode": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "ldm([a-z]+)?"
+        },
+        {
+          "type": "PATTERN",
+          "value": "stm([a-z]+)?"
         }
       ]
     },
@@ -149,17 +186,17 @@
       "members": [
         {
           "type": "PATTERN",
-          "value": "ld([a-z]+)?"
+          "value": "ldr([a-z]+)?"
         },
         {
           "type": "PATTERN",
-          "value": "st([a-z]+)?"
-        },
-        {
-          "type": "PATTERN",
-          "value": "adr"
+          "value": "str([a-z]+)?"
         }
       ]
+    },
+    "adr_opcode": {
+      "type": "PATTERN",
+      "value": "adr"
     },
     "pool_statement": {
       "type": "SEQ",
@@ -182,8 +219,71 @@
           "name": "push_opcode"
         },
         {
-          "type": "PATTERN",
-          "value": "(.*)"
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "reg_list"
+                },
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": ","
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "reg_list"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
+    "reg_list": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "register"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "register"
+            },
+            {
+              "type": "STRING",
+              "value": "-"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "register"
+            }
+          ]
         }
       ]
     },
@@ -208,8 +308,12 @@
           "name": "opcode"
         },
         {
-          "type": "SYMBOL",
-          "name": "register"
+          "type": "FIELD",
+          "name": "Rd",
+          "content": {
+            "type": "SYMBOL",
+            "name": "register"
+          }
         },
         {
           "type": "CHOICE",
@@ -224,25 +328,29 @@
           ]
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "register"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "constant"
-                }
-              ]
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
+          "type": "FIELD",
+          "name": "operand2",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "register"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "constant"
+                  }
+                ]
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
         }
       ]
     },
@@ -299,6 +407,14 @@
         },
         {
           "type": "PATTERN",
+          "value": "msr([a-z]+)?"
+        },
+        {
+          "type": "PATTERN",
+          "value": "mrs([a-z]+)?"
+        },
+        {
+          "type": "PATTERN",
           "value": "cm[pn]([a-z]+)?"
         },
         {
@@ -351,8 +467,12 @@
           "name": "branch_opcode"
         },
         {
-          "type": "SYMBOL",
-          "name": "register"
+          "type": "FIELD",
+          "name": "Rm",
+          "content": {
+            "type": "SYMBOL",
+            "name": "register"
+          }
         }
       ]
     },
@@ -513,14 +633,6 @@
     {
       "type": "PATTERN",
       "value": "\\s"
-    },
-    {
-      "type": "PATTERN",
-      "value": "\\\\\\r?\\n"
-    },
-    {
-      "type": "PATTERN",
-      "value": "\\\\( |\\t|\\v|\\f)"
     }
   ],
   "conflicts": [],

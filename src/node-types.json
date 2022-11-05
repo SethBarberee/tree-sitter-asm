@@ -106,6 +106,11 @@
     }
   },
   {
+    "type": "ldm_opcode",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "load_opcode",
     "named": true,
     "fields": {}
@@ -113,17 +118,32 @@
   {
     "type": "load_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "Rt": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "register",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
-          "type": "load_opcode",
+          "type": "adr_opcode",
           "named": true
         },
         {
-          "type": "register",
+          "type": "ldm_opcode",
+          "named": true
+        },
+        {
+          "type": "load_opcode",
           "named": true
         }
       ]
@@ -132,21 +152,48 @@
   {
     "type": "math_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "Rd": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "register",
+            "named": true
+          }
+        ]
+      },
+      "Rn": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "register",
+            "named": true
+          }
+        ]
+      },
+      "operand2": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "constant",
+            "named": true
+          },
+          {
+            "type": "register",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
-          "type": "constant",
-          "named": true
-        },
-        {
           "type": "opcode",
-          "named": true
-        },
-        {
-          "type": "register",
           "named": true
         }
       ]
@@ -186,11 +233,30 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
           "type": "push_opcode",
+          "named": true
+        },
+        {
+          "type": "reg_list",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "reg_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "register",
           "named": true
         }
       ]
@@ -204,17 +270,24 @@
   {
     "type": "return_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "Rm": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "register",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
           "type": "branch_opcode",
-          "named": true
-        },
-        {
-          "type": "register",
           "named": true
         }
       ]
@@ -223,21 +296,38 @@
   {
     "type": "simple_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "Rd": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "register",
+            "named": true
+          }
+        ]
+      },
+      "operand2": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "constant",
+            "named": true
+          },
+          {
+            "type": "register",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
-          "type": "constant",
-          "named": true
-        },
-        {
           "type": "opcode",
-          "named": true
-        },
-        {
-          "type": "register",
           "named": true
         }
       ]
@@ -267,8 +357,16 @@
     "named": false
   },
   {
+    "type": "-",
+    "named": false
+  },
+  {
     "type": ":",
     "named": false
+  },
+  {
+    "type": "adr_opcode",
+    "named": true
   },
   {
     "type": "comment",
@@ -281,5 +379,13 @@
   {
     "type": "identifier",
     "named": true
+  },
+  {
+    "type": "{",
+    "named": false
+  },
+  {
+    "type": "}",
+    "named": false
   }
 ]

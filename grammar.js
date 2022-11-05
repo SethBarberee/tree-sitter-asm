@@ -3,7 +3,8 @@ module.exports = grammar({
 
   word: ($) => $.identifier,
 
-  extras: ($) => [$.comment, /\s/, /\\\r?\n/, /\\( |\t|\v|\f)/],
+  //extras: ($) => [$.comment, /\s/, /\\\r?\n/, /\\( |\t|\v|\f)/],
+  extras: ($) => [$.comment, /\s/],
 
   rules: {
     source_file: ($) => optional($._statement),
@@ -30,42 +31,46 @@ module.exports = grammar({
     math_statement: ($) =>
       seq(
         $.opcode,
-        $.register,
+        field("Rd", $.register),
         ",",
-        $.register,
+        field("Rn", $.register),
         ",",
-        choice($.register, $.constant)
+        field("operand2", choice($.register, $.constant))
       ),
 
     // ldr r0, []
     // TODO: cheating here and combining ldr and ldm when they are somewhat different
     load_statement: ($) =>
-      choice(
-        seq($.load_opcode, $.register, /(.*)/)
-        //$.ldm_statement,
+      seq(
+        choice($.load_opcode, $.ldm_opcode, $.adr_opcode),
+        field("Rt", $.register),
+        /(.*)/
       ),
 
-    //ldm_statement: ($) => seq($.ldm_opcode, $.register, optional("!"), /,\s+\{/, $.register, /(.*)/),
-
-    //ldm_opcode: ($) => choice(/ldm([a-z]+)?/, /stm([a-z]+)?/),
-    //load_opcode: ($) => choice(/ldr([a-z]+)?/, /str([a-z]+)?/),
-    load_opcode: ($) => choice(/ld([a-z]+)?/, /st([a-z]+)?/, /adr/),
+    ldm_opcode: ($) => choice(/ldm([a-z]+)?/, /stm([a-z]+)?/),
+    load_opcode: ($) => choice(/ldr([a-z]+)?/, /str([a-z]+)?/),
+    adr_opcode: ($) => /adr/,
 
     pool_statement: ($) => seq($.label, $.directive),
 
-    // TODO deal with the variable length of registers in the {}
+    push_statement: ($) => seq($.push_opcode, "{", commaSep($.reg_list), "}"),
+
+    // NOTE: this deal with the variable length of registers in the {}
     // pop {r0}
     // pop {r0 - r1}
-    push_statement: ($) => seq($.push_opcode, /(.*)/),
+    // pop {r0 - r1, lr}
+    // pop {lr, r0 - r1}
+
+    reg_list: ($) => choice($.register, seq($.register, "-", $.register)),
 
     push_opcode: ($) => choice(/push+/, /pop+/),
 
     simple_statement: ($) =>
       seq(
         $.opcode,
-        $.register,
+        field("Rd", $.register),
         optional(","),
-        optional(choice($.register, $.constant))
+        field("operand2", optional(choice($.register, $.constant)))
       ),
 
     // TODO: fairly limited and only to ARM/THUMB for now since that's all I use
@@ -84,6 +89,8 @@ module.exports = grammar({
         /or[rn]([a-z]+)?/, // orr, orn
         /neg([a-z]+)?/,
         /mvn([a-z]+)?/,
+        /msr([a-z]+)?/,
+        /mrs([a-z]+)?/,
         /cm[pn]([a-z]+)?/, // cmp, cmn
         /rs[bc]([a-z]+)?/, // rsb/rsc
         /tst([a-z]+)?/,
@@ -97,7 +104,7 @@ module.exports = grammar({
         /nop/
       ),
 
-    return_statement: ($) => seq($.branch_opcode, $.register),
+    return_statement: ($) => seq($.branch_opcode, field("Rm", $.register)),
 
     // TODO: look into making this better for all comparisons
     branch_statement: ($) => seq($.branch_opcode, alias($.identifier, $.label)),
@@ -117,16 +124,20 @@ module.exports = grammar({
       ),
 
     //label: ($) => /(.*?):/,
-    label: ($) => seq($.identifier, ':'),
+    label: ($) => seq($.identifier, ":"),
 
     register: ($) => choice(/[r]\d+/, /sp/, /lr/, /pc/),
 
     directive: ($) => /[.][0-9a-zA-Z]+.*/,
     //directive: ($) => prec.left(1, seq(/[.][0-9a-zA-Z]+/, commaSep($.identifier))),
 
-    comment: ($) => token(choice(
-                seq('@', /(\\(.|\r?\n)|[^\\\n])*/),
-                seq('#', /(\\(.|\r?\n)|[^\\\n])*/))),
+    comment: ($) =>
+      token(
+        choice(
+          seq("@", /(\\(.|\r?\n)|[^\\\n])*/),
+          seq("#", /(\\(.|\r?\n)|[^\\\n])*/)
+        )
+      ),
 
     constant: ($) => choice(/\d+/, /0[xX][0-9a-fA-F]+/),
 
@@ -134,14 +145,14 @@ module.exports = grammar({
   },
 });
 
-function commaSep (rule) {
-  return optional(commaSep1(rule))
+function commaSep(rule) {
+  return optional(commaSep1(rule));
 }
 
-function commaSep1 (rule) {
-  return seq(rule, repeat(seq(',', rule)))
+function commaSep1(rule) {
+  return seq(rule, repeat(seq(",", rule)));
 }
 
-function commaSepTrailing (recurSymbol, rule) {
-  return choice(rule, seq(recurSymbol, ',', rule))
+function commaSepTrailing(recurSymbol, rule) {
+  return choice(rule, seq(recurSymbol, ",", rule));
 }
