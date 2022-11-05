@@ -39,10 +39,15 @@ module.exports = grammar({
         field("operand2", choice($.register, $.constant))
       ),
 
-    // ldr r0, []
-    // TODO: cheating here and combining ldr and ldm when they are somewhat different
+    // TODO: we need to better handle when [] or just a label and offsets
+    // ldr r0, [r1]
+    // ldr r0, _label
+    // str r0, [r1, 0x1]
     load_statement: ($) =>
       seq(choice($.load_opcode, $.adr_opcode), field("Rt", $.register), /(.*)/),
+
+    // NOTE: attempt to parse the above... breaks when labels are mixed in
+    //seq(choice($.load_opcode, $.adr_opcode), field("Rt", $.register), ',', '[', $.register, ',', choice($.constant, $.register), ']'),
 
     ldm_statement: ($) =>
       seq(
