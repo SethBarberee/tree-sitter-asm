@@ -64,6 +64,10 @@
           "named": true
         },
         {
+          "type": "ldm_statement",
+          "named": true
+        },
+        {
           "type": "load_statement",
           "named": true
         },
@@ -111,6 +115,46 @@
     "fields": {}
   },
   {
+    "type": "ldm_statement",
+    "named": true,
+    "fields": {
+      "Rn": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "register",
+            "named": true
+          }
+        ]
+      },
+      "registers": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "reg_list",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "ldm_opcode",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "load_opcode",
     "named": true,
     "fields": {}
@@ -136,10 +180,6 @@
       "types": [
         {
           "type": "adr_opcode",
-          "named": true
-        },
-        {
-          "type": "ldm_opcode",
           "named": true
         },
         {
@@ -351,6 +391,10 @@
         }
       ]
     }
+  },
+  {
+    "type": "!",
+    "named": false
   },
   {
     "type": ",",

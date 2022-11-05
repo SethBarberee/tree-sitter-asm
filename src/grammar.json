@@ -65,6 +65,10 @@
               },
               {
                 "type": "SYMBOL",
+                "name": "ldm_statement"
+              },
+              {
+                "type": "SYMBOL",
                 "name": "push_statement"
               },
               {
@@ -146,10 +150,6 @@
             },
             {
               "type": "SYMBOL",
-              "name": "ldm_opcode"
-            },
-            {
-              "type": "SYMBOL",
               "name": "adr_opcode"
             }
           ]
@@ -165,6 +165,84 @@
         {
           "type": "PATTERN",
           "value": "(.*)"
+        }
+      ]
+    },
+    "ldm_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "ldm_opcode"
+        },
+        {
+          "type": "FIELD",
+          "name": "Rn",
+          "content": {
+            "type": "SYMBOL",
+            "name": "register"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "!"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ","
+        },
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "FIELD",
+          "name": "registers",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "reg_list"
+                  },
+                  {
+                    "type": "REPEAT",
+                    "content": {
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "STRING",
+                          "value": ","
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "reg_list"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
         }
       ]
     },

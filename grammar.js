@@ -20,6 +20,7 @@ module.exports = grammar({
             $.simple_statement,
             $.branch_statement,
             $.load_statement,
+            $.ldm_statement,
             $.push_statement,
             $.pool_statement,
             $.label
@@ -41,10 +42,17 @@ module.exports = grammar({
     // ldr r0, []
     // TODO: cheating here and combining ldr and ldm when they are somewhat different
     load_statement: ($) =>
+      seq(choice($.load_opcode, $.adr_opcode), field("Rt", $.register), /(.*)/),
+
+    ldm_statement: ($) =>
       seq(
-        choice($.load_opcode, $.ldm_opcode, $.adr_opcode),
-        field("Rt", $.register),
-        /(.*)/
+        $.ldm_opcode,
+        field("Rn", $.register),
+        optional("!"),
+        ",",
+        "{",
+        field("registers", commaSep($.reg_list)),
+        "}"
       ),
 
     ldm_opcode: ($) => choice(/ldm([a-z]+)?/, /stm([a-z]+)?/),
