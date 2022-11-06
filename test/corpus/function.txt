@@ -44,6 +44,32 @@ test:
 
 
 =================================================
+basic ldm function
+=================================================
+
+test:
+    ldm r1!, {r2-r4}
+    bx lr
+
+------------------------------------------------
+
+(source_file
+  (function_definition
+    (func_name
+        (identifier))
+    (ldm_statement
+      (ldm_opcode)
+      (register)
+      (reg_list
+        (register)
+        (register)))
+    (return_statement
+      (branch_opcode)
+      (register))))
+
+
+
+=================================================
 basic function w/ push and branch
 =================================================
 
