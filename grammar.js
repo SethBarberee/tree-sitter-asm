@@ -46,23 +46,25 @@ module.exports = grammar({
     // str r0, [r1, r2]
     load_statement: ($) =>
       seq(
-            choice($.load_opcode, $.adr_opcode), 
-            field("Rt", $.register),
-            ",",
-            choice(
-                    field("label", alias($.identifier, $.label)),
-                    seq("[",
-                        field("Rn", $.register),
-                        optional(","),
-                        optional(
-                            choice(
-                                field("offset",$.constant), 
-                                field("regoffset", $.register),
-                            )
-                        ),
-                        "]"),
+        choice($.load_opcode, $.adr_opcode),
+        field("Rt", $.register),
+        ",",
+        choice(
+          field("label", alias($.identifier, $.label)),
+          seq(
+            "[",
+            field("Rn", $.register),
+            optional(","),
+            optional(
+              choice(
+                field("offset", $.constant),
+                field("regoffset", $.register)
+              )
             ),
-        ),
+            "]"
+          )
+        )
+      ),
 
     // NOTE: attempt to parse the above... breaks when labels are mixed in
     //seq(choice($.load_opcode, $.adr_opcode), field("Rt", $.register), ',', '[', $.register, ',', choice($.constant, $.register), ']'),
