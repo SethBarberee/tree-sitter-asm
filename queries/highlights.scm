@@ -4,7 +4,7 @@
 
 (comment) @comment @spell
 
-(register) @identifier
+(register) @parameter
 (constant) @constant
 
 (func_name) @function
