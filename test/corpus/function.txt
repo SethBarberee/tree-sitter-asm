@@ -1,17 +1,17 @@
-=================================================
+================================================================================
 basic addition function
-=================================================
+================================================================================
 
 test:
     add r0, r0, r1
     bx lr
 
-------------------------------------------------
+--------------------------------------------------------------------------------
 
 (source_file
   (function_definition
     (func_name
-        (identifier))
+      (identifier))
     (math_statement
       (opcode)
       (register)
@@ -21,42 +21,70 @@ test:
       (branch_opcode)
       (register))))
 
-=================================================
+================================================================================
 basic load function
-=================================================
+================================================================================
 
 test:
     ldr r0, [r0, 0x0] 
     bx lr
 
-------------------------------------------------
+--------------------------------------------------------------------------------
 
 (source_file
   (function_definition
     (func_name
-        (identifier))
+      (identifier))
     (load_statement
       (load_opcode)
-      (register))
+      (register)
+      (register)
+      (constant))
     (return_statement
       (branch_opcode)
       (register))))
 
+================================================================================
+basic load function w/ label and pool statement
+================================================================================
 
-=================================================
+test:
+    ldr r0, _load 
+_load: .4byte 0x0000052c
+    bx lr
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (func_name
+      (identifier))
+    (load_statement
+      (load_opcode)
+      (register)
+      (label))
+    (pool_statement
+      (label
+        (identifier))
+      (directive))
+    (return_statement
+      (branch_opcode)
+      (register))))
+
+================================================================================
 basic ldm function
-=================================================
+================================================================================
 
 test:
     ldm r1!, {r2-r4}
     bx lr
 
-------------------------------------------------
+--------------------------------------------------------------------------------
 
 (source_file
   (function_definition
     (func_name
-        (identifier))
+      (identifier))
     (ldm_statement
       (ldm_opcode)
       (register)
@@ -67,11 +95,9 @@ test:
       (branch_opcode)
       (register))))
 
-
-
-=================================================
+================================================================================
 basic function w/ push and branch
-=================================================
+================================================================================
 
 test:
     push {lr}
@@ -80,16 +106,16 @@ test:
     bl MemoryAlloc
     bx lr
 
-------------------------------------------------
+--------------------------------------------------------------------------------
 
 (source_file
   (function_definition
     (func_name
-        (identifier))
+      (identifier))
     (push_statement
-        (push_opcode)
-        (reg_list
-            (register)))
+      (push_opcode)
+      (reg_list
+        (register)))
     (simple_statement
       (opcode)
       (register)
@@ -99,15 +125,15 @@ test:
       (register)
       (constant))
     (branch_statement
-        (branch_opcode)
-        (label))
+      (branch_opcode)
+      (label))
     (return_statement
       (branch_opcode)
       (register))))
 
-=================================================
+================================================================================
 basic function w/ push reglist and branch
-=================================================
+================================================================================
 
 test:
     push {r0-r1}
@@ -116,17 +142,17 @@ test:
     bl MemoryAlloc
     bx lr
 
-------------------------------------------------
+--------------------------------------------------------------------------------
 
 (source_file
   (function_definition
     (func_name
-        (identifier))
+      (identifier))
     (push_statement
-        (push_opcode)
-        (reg_list
-            (register)
-            (register)))
+      (push_opcode)
+      (reg_list
+        (register)
+        (register)))
     (simple_statement
       (opcode)
       (register)
@@ -136,16 +162,15 @@ test:
       (register)
       (constant))
     (branch_statement
-        (branch_opcode)
-        (label))
+      (branch_opcode)
+      (label))
     (return_statement
       (branch_opcode)
       (register))))
 
-
-=================================================
+================================================================================
 double function back to back
-=================================================
+================================================================================
 
 test:
     push {lr}
@@ -159,16 +184,16 @@ test2:
     mov r0, 0x1
     bx lr
 
-------------------------------------------------
+--------------------------------------------------------------------------------
 
 (source_file
   (function_definition
     (func_name
-        (identifier))
+      (identifier))
     (push_statement
-        (push_opcode)
-        (reg_list
-            (register)))
+      (push_opcode)
+      (reg_list
+        (register)))
     (simple_statement
       (opcode)
       (register)
@@ -178,18 +203,18 @@ test2:
       (register)
       (constant))
     (branch_statement
-        (branch_opcode)
-        (label))
+      (branch_opcode)
+      (label))
     (return_statement
       (branch_opcode)
       (register)))
   (function_definition
     (func_name
-        (identifier))
+      (identifier))
     (push_statement
-        (push_opcode)
-        (reg_list
-            (register)))
+      (push_opcode)
+      (reg_list
+        (register)))
     (simple_statement
       (opcode)
       (register)
@@ -201,4 +226,3 @@ test2:
     (return_statement
       (branch_opcode)
       (register))))
-

@@ -43,8 +43,26 @@ module.exports = grammar({
     // ldr r0, [r1]
     // ldr r0, _label
     // str r0, [r1, 0x1]
+    // str r0, [r1, r2]
     load_statement: ($) =>
-      seq(choice($.load_opcode, $.adr_opcode), field("Rt", $.register), /(.*)/),
+      seq(
+            choice($.load_opcode, $.adr_opcode), 
+            field("Rt", $.register),
+            ",",
+            choice(
+                    field("label", alias($.identifier, $.label)),
+                    seq("[",
+                        field("Rn", $.register),
+                        optional(","),
+                        optional(
+                            choice(
+                                field("offset",$.constant), 
+                                field("regoffset", $.register),
+                            )
+                        ),
+                        "]"),
+            ),
+        ),
 
     // NOTE: attempt to parse the above... breaks when labels are mixed in
     //seq(choice($.load_opcode, $.adr_opcode), field("Rt", $.register), ',', '[', $.register, ',', choice($.constant, $.register), ']'),
@@ -139,7 +157,7 @@ module.exports = grammar({
     //label: ($) => /(.*?):/,
     label: ($) => seq($.identifier, ":"),
 
-    register: ($) => choice(/[r]\d+/, /sp/, /lr/, /pc/),
+    register: ($) => choice(/r\d+/, /sp/, /lr/, /pc/),
 
     directive: ($) => /[.][0-9a-zA-Z]+.*/,
     //directive: ($) => prec.left(1, seq(/[.][0-9a-zA-Z]+/, commaSep($.identifier))),
@@ -154,7 +172,8 @@ module.exports = grammar({
 
     constant: ($) => choice(/\d+/, /0[xX][0-9a-fA-F]+/),
 
-    identifier: ($) => /[_A-z0-9]+/,
+    //identifier: ($) => /[_A-z0-9]+/,
+    identifier: ($) => /[a-zA-Z_]\w*/,
   },
 });
 

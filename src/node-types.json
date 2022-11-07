@@ -163,9 +163,49 @@
     "type": "load_statement",
     "named": true,
     "fields": {
+      "Rn": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "register",
+            "named": true
+          }
+        ]
+      },
       "Rt": {
         "multiple": false,
         "required": true,
+        "types": [
+          {
+            "type": "register",
+            "named": true
+          }
+        ]
+      },
+      "label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "label",
+            "named": true
+          }
+        ]
+      },
+      "offset": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "constant",
+            "named": true
+          }
+        ]
+      },
+      "regoffset": {
+        "multiple": false,
+        "required": false,
         "types": [
           {
             "type": "register",
@@ -406,6 +446,14 @@
   },
   {
     "type": ":",
+    "named": false
+  },
+  {
+    "type": "[",
+    "named": false
+  },
+  {
+    "type": "]",
     "named": false
   },
   {

@@ -1,21 +1,21 @@
-=================================================
-basic compare 
-=================================================
+================================================================================
+basic compare
+================================================================================
 
 test:
     cmp r0, 20
     bx lr
 
-------------------------------------------------
+--------------------------------------------------------------------------------
 
 (source_file
   (function_definition
     (func_name
-        (identifier))
+      (identifier))
     (simple_statement
-        (opcode)
-        (register)
-        (constant))
+      (opcode)
+      (register)
+      (constant))
     (return_statement
-        (branch_opcode)
-        (register))))
+      (branch_opcode)
+      (register))))

@@ -11,12 +11,12 @@ test:
 @ <- function
     add r0, r0, 0        @ mixed comment
 @   ^ keyword
-@       ^ identifier
-@           ^ identifier
+@       ^ parameter
+@           ^ parameter
 @               ^ constant
 @                        ^ comment
 _hello:
 @ <- label
     bx lr
 @   ^ keyword
-@      ^ identifier
+@      ^ parameter
