@@ -39,7 +39,7 @@ module.exports = grammar({
         field("operand2", choice($.register, $.constant))
       ),
 
-    // TODO: we need to better handle when [] or just a label and offsets
+    // We handle when [] or just a label and offsets
     // ldr r0, [r1]
     // ldr r0, _label
     // str r0, [r1, 0x1]
@@ -66,9 +66,6 @@ module.exports = grammar({
         )
       ),
 
-    // NOTE: attempt to parse the above... breaks when labels are mixed in
-    //seq(choice($.load_opcode, $.adr_opcode), field("Rt", $.register), ',', '[', $.register, ',', choice($.constant, $.register), ']'),
-
     ldm_statement: ($) =>
       seq(
         $.ldm_opcode,
@@ -88,7 +85,7 @@ module.exports = grammar({
 
     push_statement: ($) => seq($.push_opcode, "{", commaSep($.reg_list), "}"),
 
-    // NOTE: this deal with the variable length of registers in the {}
+    // NOTE: this deals with the variable length of registers in the {}
     // pop {r0}
     // pop {r0 - r1}
     // pop {r0 - r1, lr}
@@ -159,10 +156,11 @@ module.exports = grammar({
     //label: ($) => /(.*?):/,
     label: ($) => seq($.identifier, ":"),
 
-    register: ($) => choice(/r\d+/, /sp/, /lr/, /pc/),
+    register: ($) => token(choice(/r\d+/, /sp/, /lr/, /pc/)),
 
-    directive: ($) => /[.][0-9a-zA-Z]+.*/,
-    //directive: ($) => prec.left(1, seq(/[.][0-9a-zA-Z]+/, commaSep($.identifier))),
+    // TODO fix up directive/identifer precedence so we can activate this rule
+    //directive_statement: ($) => seq($.directive, commaSep(choice($.constant, $.identifier))),
+    directive: ($) => token(/[.][0-9a-zA-Z]+.*/),
 
     comment: ($) =>
       token(
@@ -172,7 +170,7 @@ module.exports = grammar({
         )
       ),
 
-    constant: ($) => choice(/\d+/, /0[xX][0-9a-fA-F]+/),
+    constant: ($) => token(choice(/\d+/, /0[xX][0-9a-fA-F]+/)),
 
     //identifier: ($) => /[_A-z0-9]+/,
     identifier: ($) => /[a-zA-Z_]\w*/,

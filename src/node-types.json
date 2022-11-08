@@ -24,11 +24,6 @@
     }
   },
   {
-    "type": "constant",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "func_name",
     "named": true,
     "fields": {},
@@ -343,11 +338,6 @@
     }
   },
   {
-    "type": "register",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "return_statement",
     "named": true,
     "fields": {
@@ -465,11 +455,19 @@
     "named": true
   },
   {
+    "type": "constant",
+    "named": true
+  },
+  {
     "type": "directive",
     "named": true
   },
   {
     "type": "identifier",
+    "named": true
+  },
+  {
+    "type": "register",
     "named": true
   },
   {
