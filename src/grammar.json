@@ -365,7 +365,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "directive"
+          "name": "directive_statement"
         }
       ]
     },
@@ -730,11 +730,24 @@
         ]
       }
     },
+    "directive_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "directive"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "constant"
+        }
+      ]
+    },
     "directive": {
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "[.][0-9a-zA-Z]+.*"
+        "value": "[.][0-9a-zA-Z]+."
       }
     },
     "comment": {

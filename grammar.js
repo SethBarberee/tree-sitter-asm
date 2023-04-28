@@ -81,7 +81,7 @@ module.exports = grammar({
     load_opcode: ($) => choice(/ldr([a-z]+)?/, /str([a-z]+)?/),
     adr_opcode: ($) => /adr/,
 
-    pool_statement: ($) => seq($.label, $.directive),
+    pool_statement: ($) => seq($.label, $.directive_statement),
 
     push_statement: ($) => seq($.push_opcode, "{", commaSep($.reg_list), "}"),
 
@@ -158,9 +158,8 @@ module.exports = grammar({
 
     register: ($) => token(choice(/r\d+/, /sp/, /lr/, /pc/)),
 
-    // TODO fix up directive/identifer precedence so we can activate this rule
-    //directive_statement: ($) => seq($.directive, commaSep(choice($.constant, $.identifier))),
-    directive: ($) => token(/[.][0-9a-zA-Z]+.*/),
+    directive_statement: ($) => seq($.directive, $.constant),
+    directive: ($) => token(/[.][0-9a-zA-Z]+./),
 
     comment: ($) =>
       token(

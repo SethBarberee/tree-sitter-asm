@@ -24,6 +24,25 @@
     }
   },
   {
+    "type": "directive_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "directive",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "func_name",
     "named": true,
     "fields": {},
@@ -288,7 +307,7 @@
       "required": true,
       "types": [
         {
-          "type": "directive",
+          "type": "directive_statement",
           "named": true
         },
         {
