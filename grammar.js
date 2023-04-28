@@ -44,6 +44,7 @@ module.exports = grammar({
     // ldr r0, _label
     // str r0, [r1, 0x1]
     // str r0, [r1, r2]
+    // str r0, [r1, OFFSET - 1]
     load_statement: ($) =>
       seq(
         choice($.load_opcode, $.adr_opcode),
@@ -58,7 +59,8 @@ module.exports = grammar({
             optional(
               choice(
                 field("offset", $.constant),
-                field("regoffset", $.register)
+                field("regoffset", $.register),
+                $.offset_statement
               )
             ),
             "]"
@@ -159,7 +161,7 @@ module.exports = grammar({
     register: ($) => token(choice(/r\d+/, /sp/, /lr/, /pc/)),
 
     directive_statement: ($) => seq($.directive, $.constant),
-    directive: ($) => token(/[.][0-9a-zA-Z]+./),
+    directive: ($) => token(/[.][0-9a-zA-Z]+/),
 
     comment: ($) =>
       token(
@@ -168,6 +170,9 @@ module.exports = grammar({
           seq("#", /(\\(.|\r?\n)|[^\\\n])*/)
         )
       ),
+
+    // Used in ldr/str and directives
+    offset_statement: ($) => seq($.identifier, /-+/, $.constant),
 
     constant: ($) => token(choice(/\d+/, /0[xX][0-9a-fA-F]+/)),
 

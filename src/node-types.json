@@ -229,7 +229,7 @@
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
@@ -238,6 +238,10 @@
         },
         {
           "type": "load_opcode",
+          "named": true
+        },
+        {
+          "type": "offset_statement",
           "named": true
         }
       ]
@@ -288,6 +292,25 @@
       "types": [
         {
           "type": "opcode",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "offset_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "constant",
+          "named": true
+        },
+        {
+          "type": "identifier",
           "named": true
         }
       ]

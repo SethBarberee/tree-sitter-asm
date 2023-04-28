@@ -74,6 +74,31 @@ _load: .4byte 0x0000052c
       (register))))
 
 ================================================================================
+basic load function w/ offset
+================================================================================
+
+test:
+    ldr r2, [r3, OFFSET_REG_IE - 0x200]
+    bx lr
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (func_name
+        (identifier))
+    (load_statement
+      (load_opcode)
+      (register)
+      (register)
+      (offset_statement
+        (identifier)
+        (constant)))
+    (return_statement
+      (branch_opcode)
+      (register))))
+
+================================================================================
 basic ldm function
 ================================================================================
 
