@@ -158,7 +158,7 @@ module.exports = grammar({
     //label: ($) => /(.*?):/,
     label: ($) => seq($.identifier, ":"),
 
-    register: ($) => token(choice(/r\d+/, /sp/, /lr/, /pc/)),
+    register: ($) => token(choice(/r\d+/, /sp/, /lr/, /pc/, /sb/, /ip/)),
 
     directive_statement: ($) => seq($.directive, $.constant),
     directive: ($) => token(/[.][0-9a-zA-Z]+/),
@@ -167,14 +167,14 @@ module.exports = grammar({
       token(
         choice(
           seq("@", /(\\(.|\r?\n)|[^\\\n])*/),
-          seq("#", /(\\(.|\r?\n)|[^\\\n])*/)
+          seq(";", /(\\(.|\r?\n)|[^\\\n])*/)
         )
       ),
 
     // Used in ldr/str and directives
     offset_statement: ($) => seq($.identifier, /-+/, $.constant),
 
-    constant: ($) => token(choice(/\d+/, /0[xX][0-9a-fA-F]+/)),
+    constant: ($) => token(choice(/[#]?\d+/, /[#]?0[xX][0-9a-fA-F]+/)),
 
     //identifier: ($) => /[_A-z0-9]+/,
     identifier: ($) => /[a-zA-Z_]\w*/,

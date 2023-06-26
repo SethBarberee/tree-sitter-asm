@@ -730,6 +730,14 @@
           {
             "type": "PATTERN",
             "value": "pc"
+          },
+          {
+            "type": "PATTERN",
+            "value": "sb"
+          },
+          {
+            "type": "PATTERN",
+            "value": "ip"
           }
         ]
       }
@@ -777,7 +785,7 @@
             "members": [
               {
                 "type": "STRING",
-                "value": "#"
+                "value": ";"
               },
               {
                 "type": "PATTERN",
@@ -812,11 +820,11 @@
         "members": [
           {
             "type": "PATTERN",
-            "value": "\\d+"
+            "value": "[#]?\\d+"
           },
           {
             "type": "PATTERN",
-            "value": "0[xX][0-9a-fA-F]+"
+            "value": "[#]?0[xX][0-9a-fA-F]+"
           }
         ]
       }

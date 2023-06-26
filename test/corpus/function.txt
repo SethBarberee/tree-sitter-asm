@@ -22,6 +22,28 @@ test:
       (register))))
 
 ================================================================================
+basic mov function (with # constant)
+================================================================================
+
+test:
+    mov r0, #0
+    bx lr
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (func_name
+      (identifier))
+    (simple_statement
+      (opcode)
+      (register)
+      (constant))
+    (return_statement
+      (branch_opcode)
+      (register))))
+
+================================================================================
 basic load function
 ================================================================================
 
@@ -43,6 +65,30 @@ test:
     (return_statement
       (branch_opcode)
       (register))))
+
+================================================================================
+basic load function (#2)
+================================================================================
+
+test:
+    ldr r0, [r0, #0x0] 
+    bx lr
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (func_name
+      (identifier))
+    (load_statement
+      (load_opcode)
+      (register)
+      (register)
+      (constant))
+    (return_statement
+      (branch_opcode)
+      (register))))
+
 
 ================================================================================
 basic load function w/ label and pool statement
@@ -184,6 +230,57 @@ test:
       (opcode)
       (register)
       (constant))
+    (simple_statement
+      (opcode)
+      (register)
+      (constant))
+    (branch_statement
+      (branch_opcode)
+      (label))
+    (return_statement
+      (branch_opcode)
+      (register))))
+
+================================================================================
+basic function w/ multiple pushes and branch
+================================================================================
+
+test:
+	push {r4-r7,lr}
+	mov r7, r9
+	mov r6, r8
+	push {r6,r7}
+	sub sp, 0x18
+    bl MemoryAlloc
+    bx lr
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (func_name
+      (identifier))
+    (push_statement
+      (push_opcode)
+      (reg_list
+        (register)
+        (register))
+      (reg_list
+        (register)))
+    (simple_statement
+      (opcode)
+      (register)
+      (register))
+    (simple_statement
+      (opcode)
+      (register)
+      (register))
+    (push_statement
+      (push_opcode)
+      (reg_list
+        (register))
+      (reg_list
+        (register)))
     (simple_statement
       (opcode)
       (register)

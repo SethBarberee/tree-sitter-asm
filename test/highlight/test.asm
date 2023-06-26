@@ -4,14 +4,18 @@
 @ hello
 @ <- comment
 
-# hello
-@ <- comment
-
 .align 2,0
 @ <- preproc
 
 test:
 @ <- function
+    push {r0}
+@        ^ punctuation.delimiter
+@           ^ punctuation.delimiter
+	ldm r3!, {r0}
+@         ^ punctuation.delimiter
+	ldr r0, [r0, #0x0]
+@           ^ punctuation.delimiter
     add r0, r0, 0        @ mixed comment
 @   ^ keyword
 @       ^ parameter
