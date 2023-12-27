@@ -1,3 +1,6 @@
-[
-    (function_definition)
-] @scope
+; scopes
+(function_definition) @scope
+
+; references
+(label) @reference
+(identifier) @reference
