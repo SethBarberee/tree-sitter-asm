@@ -18,15 +18,15 @@ test:
 @           ^ punctuation.delimiter
     add r0, r0, 0        @ mixed comment
 @   ^ keyword
-@       ^ parameter
-@           ^ parameter
+@       ^ variable.parameter
+@           ^ variable.parameter
 @               ^ constant
 @                        ^ comment
 _hello:
 @ <- label
     bx lr
 @   ^ keyword
-@      ^ parameter
+@      ^ variable.parameter
 .align 2,0
 _08000340: .4byte gUnknown_202DCF8
 @ <- label
