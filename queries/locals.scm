@@ -1,6 +1,6 @@
 ; scopes
-(function_definition) @scope
+(function_definition) @local.scope
 
 ; references
-(label) @reference
-(identifier) @reference
+(label) @local.reference
+(identifier) @local.reference

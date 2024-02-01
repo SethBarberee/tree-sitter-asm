@@ -16,7 +16,7 @@
 
 (comment) @comment @spell
 
-(register) @parameter
+(register) @variable.parameter
 (constant) @constant
 
 (func_name (identifier)) @function
