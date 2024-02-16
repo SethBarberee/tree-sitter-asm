@@ -4,6 +4,10 @@
 @ hello
 @ <- comment
 
+#include "hello.inc"
+@ <- preproc 
+@        ^ string
+
 .align 2,0
 @ <- preproc
 

@@ -1,0 +1,14 @@
+=================================================
+basic include 
+=================================================
+
+#include "hello.inc"
+
+------------------------------------------------
+
+(source_file
+  (include_statement
+    (string
+        (identifier)
+        (ERROR
+        (directive)))))

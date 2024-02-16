@@ -1,5 +1,5 @@
 module.exports = grammar({
-  name: "asm",
+  name: "arm", // have to use this since upstream has asm now
 
   word: ($) => $.identifier,
 
@@ -9,7 +9,8 @@ module.exports = grammar({
   rules: {
     source_file: ($) => optional($._statement),
 
-    _statement: ($) => repeat1(choice($.function_definition, $.directive)),
+    _statement: ($) =>
+      repeat1(choice($.function_definition, $.directive, $.include_statement)),
 
     function_definition: ($) =>
       seq(
@@ -23,10 +24,10 @@ module.exports = grammar({
             $.ldm_statement,
             $.push_statement,
             $.pool_statement,
-            $.label
-          )
+            $.label,
+          ),
         ),
-        $.return_statement
+        $.return_statement,
       ),
 
     math_statement: ($) =>
@@ -36,7 +37,7 @@ module.exports = grammar({
         ",",
         field("Rn", $.register),
         ",",
-        field("operand2", choice($.register, $.constant))
+        field("operand2", choice($.register, $.constant)),
       ),
 
     // We handle when [] or just a label and offsets
@@ -60,12 +61,12 @@ module.exports = grammar({
               choice(
                 field("offset", $.constant),
                 field("regoffset", $.register),
-                $.offset_statement
-              )
+                $.offset_statement,
+              ),
             ),
-            "]"
-          )
-        )
+            "]",
+          ),
+        ),
       ),
 
     ldm_statement: ($) =>
@@ -76,7 +77,7 @@ module.exports = grammar({
         ",",
         "{",
         field("registers", commaSep($.reg_list)),
-        "}"
+        "}",
       ),
 
     ldm_opcode: ($) => choice(/ldm([a-z]+)?/, /stm([a-z]+)?/),
@@ -102,7 +103,7 @@ module.exports = grammar({
         $.opcode,
         field("Rd", $.register),
         optional(","),
-        field("operand2", optional(choice($.register, $.constant)))
+        field("operand2", optional(choice($.register, $.constant))),
       ),
 
     // TODO: fairly limited and only to ARM/THUMB for now since that's all I use
@@ -133,7 +134,7 @@ module.exports = grammar({
         /umlal([a-z]+)?/,
         /smull([a-z]+)?/,
         /smlal([a-z]+)?/,
-        /nop/
+        /nop/,
       ),
 
     return_statement: ($) => seq($.branch_opcode, field("Rm", $.register)),
@@ -152,7 +153,7 @@ module.exports = grammar({
         /(bpl)\s+/,
         /(bx)\s+/,
         /(bl([a-z]+)?)\s+/,
-        /(bg([a-z]+)?)\s+/
+        /(bg([a-z]+)?)\s+/,
       ),
 
     //label: ($) => /(.*?):/,
@@ -163,12 +164,17 @@ module.exports = grammar({
     directive_statement: ($) => seq($.directive, $.constant),
     directive: ($) => token(/[.][0-9a-zA-Z]+/),
 
+    string: ($) => seq('"', $.identifier, '"'),
+
+    // TODO parse the file as a string
+    include_statement: ($) => seq("#include", $.string),
+
     comment: ($) =>
       token(
         choice(
           seq("@", /(\\(.|\r?\n)|[^\\\n])*/),
-          seq(";", /(\\(.|\r?\n)|[^\\\n])*/)
-        )
+          seq(";", /(\\(.|\r?\n)|[^\\\n])*/),
+        ),
       ),
 
     // Used in ldr/str and directives

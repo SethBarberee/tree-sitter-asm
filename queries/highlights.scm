@@ -22,6 +22,8 @@
 (func_name (identifier)) @function
 (label (identifier)) @label
 (directive) @preproc
+(include_statement) @preproc
+(string) @string
 
 [
     (load_opcode)

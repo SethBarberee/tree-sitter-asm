@@ -1,5 +1,5 @@
 {
-  "name": "asm",
+  "name": "arm",
   "word": "identifier",
   "rules": {
     "source_file": {
@@ -26,6 +26,10 @@
           {
             "type": "SYMBOL",
             "name": "directive"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "include_statement"
           }
         ]
       }
@@ -761,6 +765,36 @@
         "type": "PATTERN",
         "value": "[.][0-9a-zA-Z]+"
       }
+    },
+    "string": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "\""
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "STRING",
+          "value": "\""
+        }
+      ]
+    },
+    "include_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "#include"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string"
+        }
+      ]
     },
     "comment": {
       "type": "TOKEN",
